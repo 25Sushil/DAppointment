@@ -41,7 +41,7 @@
                 $_SESSION['id'] = $id;
                 $_SESSION['username'] = $email;
                 setcookie('remember_me', $email, time() + (86400 * 30)); 
-
+                
                 header("location: patient/dash.php");
             }else{
                 echo 'Wrong Password';
