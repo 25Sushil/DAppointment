@@ -1,0 +1,83 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.container{
+    margin: 7px;
+    margin-left: 120px;
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px solid black;
+    border-radius: 10px;
+    box-shadow: 0 8px 14px 0 rgba(0,0,0,0.2);
+    text-align: start;
+    align-items: center;
+    justify-content: center;
+    width: 60%;
+    min-height: auto;
+    background-color: rgba(141, 200, 208, 0.347);
+    position: absolute;
+}
+
+form{
+    display: inline-block;
+    margin: 6px;
+    padding: 5px;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+}
+
+label{
+    font-size: 20px;
+    font-weight: 30px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+input[type="password"],
+input[type="time"], select, textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    gap: 20px;
+    background-color: rgba(0, 0, 255, 0.247);
+    color: black;
+    font-size: 15px;
+}
+
+.buttons{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 15px;
+    text-align: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+button{
+    font-size: 20px;
+    padding: 5px;
+    border-radius: 10px;
+    transition-duration: 0.55s;
+}
+
+button:hover{
+    color: #000000;
+    background-color: aqua;
+    cursor: pointer;
+    transform: translateY(-3px);
+}
+
+span{
+    color: red;
+}

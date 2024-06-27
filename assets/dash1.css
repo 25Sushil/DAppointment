@@ -1,0 +1,445 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.dashboard {
+    display: grid;
+    grid-template-columns: auto 2fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+        "header header"
+        "sidebar main";
+    height: 100vh;
+}
+
+.dashboard a{
+    text-decoration: none;
+    display: flex;
+    gap: 20px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+header {
+    grid-area: header;
+    color: #000000;
+    padding: 10px;
+    text-align: center;
+}
+
+header img{
+    width: 40px;
+    height: 40px;
+    border: 1px solid white;
+    border-radius: 15px;
+}
+
+header a{
+    padding: 8px;
+}
+
+header p{
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidebar {
+    grid-area: sidebar;
+    background: #f4f4f4;
+    padding: 10px;
+    height: auto;
+    position: relative;
+}
+
+.sidebar header>a{
+    border: 2px solid blue;
+    color: #f4f4f4;
+    background-color: blue;
+}
+
+.sidebar-items ul{
+    display: inline;
+    margin: 20px;
+    text-align: center;
+    text-decoration: none;
+    justify-content: space-between;
+}
+
+.sidebar-items li{
+    display: flex;
+    text-align: center;
+    align-items: center;
+    list-style: none;
+    justify-content: space-between;
+}
+
+li.active a{
+    color: crimson;
+}
+
+.main {
+    grid-area: main;
+    margin: 10px;
+    padding: 20px;
+}
+
+.head{
+    display: flex;
+    width: 100%;
+    text-align: center;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.head h1, p{
+    display: block;
+    text-align: start;
+    align-items: center;
+}
+
+.search-bar{
+    width: 70%;
+    height: 45px;
+    display: flex;
+    gap: 5px;
+}
+
+.head-bar h2{
+    display: flex;
+    text-align: center;
+    align-items: center;
+}
+
+.search-bar input{
+    padding: 20px;
+    width: 80%;
+    border-radius: 10px;
+}
+
+.search-bar button{
+    border: none; 
+    background-color: transparent;
+}
+
+.search-bar button:hover{
+    cursor: pointer;
+}
+
+.date-container {
+    text-align: center;
+}
+
+.dashed{
+    display: block;
+    padding: 0px;
+    margin: 0px;
+}
+
+.banner p{
+    font-size: 18px;
+    padding: 10px;
+}
+
+.banner>h2, h3{
+    padding: 10px;
+}
+
+.banner .view{
+    display: flex;
+    flex-wrap: wrap;
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    border: 0.25px solid aqua;
+    border-radius: 40px;
+}
+
+.banner .view:hover{
+    background-color: rgb(154, 154, 247);
+}
+
+.hasbg {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 0 60px 0 60px;
+}
+
+.status{
+    display: block;
+    margin-top: 20px;
+}
+  
+.status .status-bar h2{
+    font-size: 200;
+}
+  
+.dash-collection{
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    justify-content: space-around;
+}
+  
+.dash-collection .doc{
+    border: 1px solid rgb(255, 255, 255);
+    border-radius: 15px;
+    box-shadow: 0 8px 14px 0 rgba(0,0,0,0.2);
+    height: 150px;
+    width: 150px;
+    margin: 10px;
+    padding: 10px;
+}
+
+.patient-details{
+    padding: 20px;
+    display: flexbox;
+    border: 2px solid crimson;
+}
+
+.patient-details h2{
+    text-align: center;
+}
+
+.schedule-card {
+    width: 190px;
+    height: 254px;
+    border-radius: 30px;
+    background: #e0e0e0;
+    box-shadow: 15px 15px 30px #bebebe,
+           -15px -15px 30px #ffffff;
+}
+
+.tabular{
+    background: #fff;
+    margin-top: 1rem;
+}
+
+.table-container{
+    width: 100%;
+    text-align: center;
+}
+
+thead{
+    background-color: rgb(76, 208, 249);
+    color: #fff;
+}
+
+th, td, thead, tr, table{
+    border: 1px solid rgba(0, 0, 0, 0.525);
+    border-collapse: collapse;
+}
+
+th{
+    padding: 12px;
+    font-size: 16px;
+}
+
+td{
+    padding: 8px;
+    color: #333;
+}
+
+.doctor-info .add{
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    align-items: center;
+    font-size: 200;
+}
+
+.session-info .add{
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    align-items: center;
+    font-size: 200;
+}
+
+.add>h3{
+    padding: 0;
+}
+
+.add button{
+    display: flex;
+    padding: 10px;
+    color: #fff;
+    background-color: aqua;
+    border: 1px solid aqua;
+    border-radius: 15px;
+    font-weight: bold;
+}
+
+.event{
+    display: flex;
+    gap: 10px;
+    border: none;
+    justify-content: center;
+}
+
+.table-container td>button{
+    border: none;
+    border-radius: 10px;
+    background-color: rgba(136, 240, 240, 0.76);
+    display: inline;
+    text-align: center;
+}
+
+.filter-bar{
+    border: 1px solid black;
+    border-radius: 7px;
+}
+  
+.filter-bar>form{
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: space-around;
+    padding:10px;
+}
+
+.date-group{
+    display: flex;
+    align-items: center;
+}
+
+.date-group label, input, button{
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.date-group>input{
+    width: 500px;
+}
+
+.date-group>button{
+    width: 120px;
+}
+
+.date-group>button:hover{
+    background-color: aqua;
+}
+
+.cards{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    text-align: center;
+}
+
+.card {
+    overflow: hidden;
+    position: relative;
+    background-color: #ffffff;
+    text-align: left;
+    border: 1px solid grey;
+    border-radius: 0.5rem;
+    width: 380px;
+}
+  
+.card>.title {
+    padding: 1.25rem 1rem 1rem 1rem;
+    background-color: #ffffff;
+    text-align: center;
+}
+  
+.title>.content {
+    margin-top: 0.75rem;
+    text-align: start;
+}
+  
+.title>.actions {
+    margin: 0.75rem 1rem;
+    background-color: #F9FAFB;
+}
+  
+.actions>.book {
+    display: inline-flex;
+    padding: 0.5rem 1rem;
+    background-color: #6565e7;
+    color: #ffffff;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    font-weight: 500;
+    justify-content: center;
+    width: 100%;
+    border-radius: 0.375rem;
+    border-width: 1px;
+    border-color: transparent;
+}
+
+.actions>.book a{
+    color: white;
+}
+
+.actions>.book:hover{
+    cursor: pointer;
+}
+
+.config{
+    display: inline;
+
+}
+
+.config button{
+    width: 100%;
+}
+
+.config button.edit:hover{
+    cursor: pointer;
+    background-color: aqua;
+    transition: all 0.5s;
+}
+
+.config button.delete:hover{
+    cursor: pointer;
+    background-color: red;
+    transition: all 0.5s;
+}
+
+.icon {
+    display: inline-block;
+    width: 70px;
+    height: 50px;
+    stroke-width: 0;
+    stroke: currentColor;
+    fill: currentColor;
+}
+
+.icon-user {
+    width: 2em;
+}
+
+.icon-dashboard, .icon-medical_services, 
+.icon-accessible_forward, .icon-access_alarms, 
+.icon-bookmark_outline, .icon-activity, 
+.icon-person_add_alt_1, .icon-add_alarm,
+.icon-text-document, .icon-cog, .icon-upload, .icon-user-plus, .icon-update, .icon-injection, .icon-checkmark {
+    width: 2em;
+}
+
+.icon-eye, .icon-trash, .icon-pencil, 
+.icon-search, .icon-check-circle, .icon-checkmark, .icon-bars{
+    width: 5em;
+    height: 1.5em;
+}
+
+button .icon-activity{
+    width: 5em;
+    height: 1.5em;
+}
+
+@media screen and (max-width: 320px) {
+    
+}
