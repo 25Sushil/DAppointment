@@ -11,7 +11,7 @@
     }
     $result = mysqli_query($conn, $sql);
     
-    $useremail = $_SESSION["username"];
+    $useremail = $_SESSION["username_admin"];
     $usql = "SELECT name FROM admin where email='$useremail';";
     $uresult = mysqli_query($conn, $usql);
     $urow = mysqli_fetch_assoc($uresult);
@@ -31,7 +31,7 @@
             <header>
                 <svg class="icon icon-user"><use xlink:href="#icon-user"></use></svg>
                 <h1><?php echo $urow['name']; ?></h1>
-                <p><?php echo "". $_SESSION["username"].""; ?></p><br>
+                <p><?php echo "". $_SESSION["username_admin"].""; ?></p><br>
                 <a href="../admin/logout.php">Log Out</a>
             </header>
             <hr>

@@ -5,7 +5,7 @@
     $sql = "SELECT sp.title, sc.time, doc.fname, sc.date from schedule as sc INNER JOIN specialities as sp ON sc.sid = sp.id INNER JOIN doctor as doc ON sc.did = doc.id";
     $result = mysqli_query($conn, $sql);
 
-    $useremail = $_SESSION["username"];
+    $useremail = $_SESSION["username_patient"];
     $usql = "SELECT fullname FROM register where email='$useremail';";
     $uresult = mysqli_query($conn, $usql);
     $urow = mysqli_fetch_assoc($uresult);
@@ -24,7 +24,7 @@
             <header>
                 <svg class="icon icon-user"><use xlink:href="#icon-user"></use></svg>
                 <h1><?php echo $urow['fullname']; ?></h1>
-                <p><?php echo ''. $_SESSION['username']. ''; ?></p><br>
+                <p><?php echo ''. $_SESSION['username_patient']. ''; ?></p><br>
                 <a href="../logout.php">Log Out</a>
             </header>
             <hr>

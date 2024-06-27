@@ -39,9 +39,8 @@
             if($password == $dbpwd){
                 session_start();
                 $_SESSION['id'] = $id;
-                $_SESSION['username'] = $email;
-                setcookie('remember_me', $email, time() + (86400 * 30)); 
-                
+                $_SESSION['username_patient'] = $email;
+                setcookie('remember_patient', $email, time() + (86400 * 30)); 
                 header("location: patient/dash.php");
             }else{
                 echo 'Wrong Password';
@@ -69,8 +68,6 @@
     </style>
 </head>
 <body class="hasbg bgfull-fixed" style="background-image: url('assets/img/b4.jpg');">
-
-
     <div class="login-container">
         <form class="login-form" action="#" name="login" method="post">
             <h2>Login</h2>

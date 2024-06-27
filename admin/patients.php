@@ -13,7 +13,7 @@
     // $sql = "SELECT pa.id, pa.aid, ap.fullname, sp.title, doc.fname from patient as pa INNER JOIN appointment as ap ON pa.aid = ap.id INNER JOIN specialities as sp ON pa.sid = sp.id INNER JOIN doctor as doc ON pa.did = doc.id";
     // $result = mysqli_query($conn, $sql);
 
-    $useremail = $_SESSION["username"];
+    $useremail = $_SESSION["username_admin"];
     $usql = "SELECT name FROM admin where email='$useremail';";
     $uresult = mysqli_query($conn, $usql);
     $urow = mysqli_fetch_assoc($uresult);
@@ -33,7 +33,7 @@
             <header>
                 <svg class="icon icon-user"><use xlink:href="#icon-user"></use></svg>
                 <h1><?php echo $urow['name']; ?></h1>
-                <p><?php echo "". $_SESSION["username"].""; ?></p><br>
+                <p><?php echo "". $_SESSION["username_admin"].""; ?></p><br>
                 <a href="../admin/logout.php">Log Out</a>
             </header>
             <hr>

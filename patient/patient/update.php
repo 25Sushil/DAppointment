@@ -2,7 +2,7 @@
     include '../../connection.php';
     include '../../session.php';
 
-    $useremail = $_SESSION["username"];
+    $useremail = $_SESSION["username_patient"];
     $usql = "SELECT fullname FROM register where email='$useremail';";
     $uresult = mysqli_query($conn, $usql);
     $urow = mysqli_fetch_assoc($uresult);
@@ -49,7 +49,7 @@
             <header>
                 <svg class="icon icon-user"><use xlink:href="#icon-user"></use></svg>
                 <h1><?php echo $urow['fullname']; ?></h1>
-                <p><?php echo "". $_SESSION["username"].""; ?></p><br>
+                <p><?php echo "". $_SESSION["username_patient"].""; ?></p><br>
                 <a href="../../admin/logout.php">Log Out</a>
             </header>
             <hr>

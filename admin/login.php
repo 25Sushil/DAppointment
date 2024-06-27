@@ -39,9 +39,9 @@
         if($email == $dbemail){
             if($password == $dbpwd){
                 session_start();
-                $_SESSION['username'] = $email;
+                $_SESSION['username_admin'] = $email;
                 $_SESSION['id'] = $dbid;
-                setcookie('remember_me', $email, time() + (86400 * 30)); 
+                setcookie('remember_admin', $email, time() + (86400 * 30)); 
                 header("location: ../admin/dash.php");
             }else{
                 echo 'Password doesnot match';

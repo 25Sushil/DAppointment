@@ -7,7 +7,7 @@
     $query = mysqli_query($conn, $sql);
     $result = mysqli_fetch_assoc($query);
 
-    $useremail = $_SESSION["username"];
+    $useremail = $_SESSION["username_patient"];
     $usql = "SELECT fullname FROM register where email='$useremail';";
     $uresult = mysqli_query($conn, $usql);
     $urow = mysqli_fetch_assoc($uresult);

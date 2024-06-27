@@ -34,8 +34,8 @@
         if($email == $dbemail){
             if($password == $dbpwd){
                 session_start();
-                $_SESSION['username'] = $email;
-                setcookie('remember_me', $email, time() + (86400 * 30)); // 30 days
+                $_SESSION['username_doctor'] = $email;
+                setcookie('remember_doctor', $email, time() + (86400 * 30)); // 30 days
                 header("location: ../doctor/dash.php");
             }else{
                 echo 'Password doesnot match';
