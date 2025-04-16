@@ -8,7 +8,7 @@
     $result = mysqli_fetch_assoc($query);
 
     $useremail = $_SESSION["username_patient"];
-    $usql = "SELECT fullname FROM register where email='$useremail';";
+    $usql = "SELECT * FROM register where email='$useremail';";
     $uresult = mysqli_query($conn, $usql);
     $urow = mysqli_fetch_assoc($uresult);
 
@@ -150,7 +150,7 @@
                 <form action="" method="post" name="register">
         
                     <div class="input-group">
-                        <input type="text" id="fullname" name="fullname" placeholder="Enter Your Full Name" value="<?php echo isset($fullname) ? $fullname : ''; ?>">
+                        <input type="text" id="fullname" name="fullname" placeholder="Enter Your Full Name" value="<?php echo $urow['fullname']; ?>">
                         <span><?php echo isset($err['fullname'])? $err['fullname']: ''; ?></span>
                     </div> 
         
@@ -212,7 +212,7 @@
                     </div>      
         
                     <div class="input-group one-third">
-                        <input type="tel" id="tel" name="tel" placeholder="Phone Number" value="<?php echo isset($tel) ? $tel : ''; ?>">
+                        <input type="tel" id="tel" name="tel" placeholder="Phone Number" value="<?php echo $urow['tel']; ?>">
                         <span><?php echo isset($err['tel'])? $err['tel']: ''; ?></span>
                     </div>
         
