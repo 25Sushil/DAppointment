@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 27, 2024 at 09:46 AM
+-- Generation Time: Apr 19, 2025 at 03:22 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -61,18 +61,6 @@ CREATE TABLE `appointment` (
   `status` tinyint(2) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `appointment`
---
-
-INSERT INTO `appointment` (`id`, `fullname`, `email`, `phone`, `bg`, `address`, `sid`, `did`, `date`, `time`, `status`) VALUES
-(35, 'Sushil Bohora', 'bohorasushil28@gmail.com', '9825151685', 'O-', 'Thankot', 16, 54, '2024-06-23', '18:14:00', 2),
-(37, 'Sushil Bohora', 'bohorasushil28@gmail.com', '9825151855', 'O+', 'Thankot', 17, 53, '2024-06-25', '12:49:00', 2),
-(38, 'Binit Gurung', 'bohorasushil28@gmail.com', '9825151855', 'O-', 'kathmandu', 16, 54, '2024-06-25', '12:49:00', 2),
-(39, 'sid ghim', 'bohorasushil28@gmail.com', '9840176421', 'AB-', 'kathmandu', 16, 54, '2024-06-25', '12:52:00', 2),
-(40, 'Binit Gurung', 'bohorasushil28@gmail.com', '9825151855', 'AB+', 'Thankot', 16, 54, '2024-06-25', '12:54:00', 2),
-(41, 'Binit Gurung', 'binit111@gmail.com', '9840176421', 'AB-', 'kathmandu', 34, 68, '2024-06-27', '12:52:00', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -96,7 +84,7 @@ CREATE TABLE `doctor` (
 --
 
 INSERT INTO `doctor` (`id`, `fname`, `email`, `password`, `phone`, `image_name`, `image_path`, `sid`, `created_at`) VALUES
-(50, 'DR. Yadab Dhakal', 'yadab11@gmail.com', 'b26555fbf32e6d8047e7de14a357eaaee7ead0d3', '9805879212', 'doctor2.jpg', 'uploads/doctor2.jpg', 21, '2024-06-18 04:03:10'),
+(50, 'DR. Yadab Dhakal', 'yadab11@gmail.com', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '9805879212', '', 'uploads/', 21, '2024-06-18 04:03:10'),
 (51, 'DR. Shelly Shrestha', 'shelly11@gmail.com', '11b03e5b5b37441417e8065ec3bb6cc44ad798b3', '9805879212', 'doctor4.jpg', 'uploads/doctor4.jpg', 18, '2024-06-18 04:05:08'),
 (52, 'DR. Suresh Lamichhane', 'suresh11@gmail.com', '7054f8848d94a0d18b989fcb60d8dcd9cc934cdd', '9805879212', 'doctor5.jpg', 'uploads/doctor5.jpg', 20, '2024-06-18 04:06:16'),
 (53, 'DR. Dina Shrestha', 'dina11@gmail.com', '9b998cc104cbc9fdb0d304f1a66498b4b4b90b54', '9805879212', 'doctor9.jpg', 'uploads/doctor9.jpg', 17, '2024-06-18 04:07:49'),
@@ -104,7 +92,7 @@ INSERT INTO `doctor` (`id`, `fname`, `email`, `password`, `phone`, `image_name`,
 (57, 'Dr. Niranjan Acharya', 'niranjan11@gmail.com', 'c69f023f20a48ed3efd9eb1997ec5213980bfc13', '9814142536', 'niranjan.png', 'uploads/niranjan.png', 23, '2024-06-19 04:12:09'),
 (64, 'Dr. Manu Basnet', 'manu11@gmial.com', '19c44c62d4489e099eaf5adc0420377d521cb26e', '9836251478', 'manu.png', 'uploads/manu.png', 26, '2024-06-19 06:26:57'),
 (65, 'Dr. Neyaz Kausar', 'neyaz11@gmail.com', 'e8be5538dae2ac2c5dab13bc7b5dc45f4bbdb38e', '9805879212', 'doctor11.jpg', 'uploads/doctor11.jpg', 31, '2024-06-25 14:38:24'),
-(68, 'Dr. Banira Karki', 'banira11@gmail.com', 'f7a305155a3fbc8186f283363da96d9d88f481e1', '9825142536', '6177c411c38c8.png', 'uploads/6177c411c38c8.png', 34, '2024-06-27 06:35:33');
+(68, 'Dr. Banira Karki', 'banira11@gmail.com', 'e1bb38e9370720f80e32538a12c1397a95cd68b7', '9825142536', '', 'uploads/', 34, '2024-06-27 06:35:33');
 
 -- --------------------------------------------------------
 
@@ -119,18 +107,6 @@ CREATE TABLE `patient` (
   `did` int(11) NOT NULL,
   `created-at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `patient`
---
-
-INSERT INTO `patient` (`id`, `aid`, `sid`, `did`, `created-at`) VALUES
-(97, 35, 16, 54, '2024-06-23 12:29:55'),
-(98, 37, 17, 53, '2024-06-25 07:04:29'),
-(99, 38, 16, 54, '2024-06-25 07:05:08'),
-(100, 39, 16, 54, '2024-06-25 07:07:48'),
-(101, 40, 16, 54, '2024-06-25 07:09:11'),
-(102, 41, 34, 68, '2024-06-27 07:32:25');
 
 -- --------------------------------------------------------
 
@@ -279,7 +255,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `appointment`
 --
 ALTER TABLE `appointment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT for table `doctor`
@@ -291,7 +267,7 @@ ALTER TABLE `doctor`
 -- AUTO_INCREMENT for table `patient`
 --
 ALTER TABLE `patient`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
 
 --
 -- AUTO_INCREMENT for table `register`
