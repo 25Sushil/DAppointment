@@ -20,6 +20,20 @@
             $fname = $_POST['fname'];
         }
 
+        if(empty($_POST['latitude'])){
+            $err['latitude'] = "enter latitude";
+            $error ++;
+        }else{
+            $latitude = $_POST['latitude'];
+        }
+
+        if(empty($_POST['longitude'])){
+            $err['longitude'] = "enter longitude";
+            $error ++;
+        }else{
+            $longitude = $_POST['longitude'];
+        }
+
         if(empty($_POST['email'])){
             $err['email'] = "enter email";
             $error ++;
@@ -60,6 +74,8 @@
 
         if($error == 0){
             $fname = $_POST['fname'];
+            $latitude = $_POST['latitude'];
+            $longitude = $_POST['longitude'];
             $email = $_POST['email'];
             $speciality = $_POST['speciality'];
             $phone = $_POST['phone'];
@@ -73,7 +89,7 @@
 
             $password = sha1($_POST['password']);
 
-            $sql = "INSERT INTO `doctor` (`fname`, `email`,`password`, `phone`, `image_name`, `image_path`, `sid`) VALUES ('$fname','$email', '$password','$phone', '$name', '$path', '$speciality');";
+            $sql = "INSERT INTO `doctor` (`fname`, `latitude`, `longitude`, `email`, `password`, `phone`, `image_name`, `image_path`, `sid`) VALUES ('$fname','$latitude', '$longitude', '$email', '$password','$phone', '$name', '$path', '$speciality');";
 
             $result = mysqli_query($conn, $sql);
             if($result){
@@ -129,6 +145,18 @@
                         <span><?php echo isset($err['fname'])? $err['fname']: '' ?></span>
                     </div><br>
                     
+                    <div class="input-group">
+                        <label for="name">Latitude:</label><br>
+                        <input type="text" id="latitude" name="latitude" placeholder="latitude" value="<?php echo isset($latitude) ? $latitude : ''; ?>">
+                        <span><?php echo isset($err['latitude'])? $err['latitude']: '' ?></span>
+                    </div><br>
+
+                    <div class="input-group">
+                        <label for="name">Longitude:</label><br>
+                        <input type="text" id="longitude" name="longitude" placeholder="longitude" value="<?php echo isset($longitude) ? $longitude : ''; ?>">
+                        <span><?php echo isset($err['longitude'])? $err['longitude']: '' ?></span>
+                    </div><br>
+
                     <div class="input-group">
                         <label for="email">Email:</label><br>
                         <input type="text" id="email" name="email" placeholder="Email Address" value="<?php echo isset($email) ? $email : ''; ?>">

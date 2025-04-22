@@ -4,10 +4,10 @@
 
     $keyword = isset($_GET['keyword'])  ? $_GET['keyword'] : NULL ; //ternary operator
     if(isset($keyword)){
-        $sql = "SELECT doc.id, doc.fname, doc.email, doc.phone, sp.title from doctor as doc INNER JOIN specialities as sp ON doc.sid = sp.id where fname like '%$keyword%'";
+        $sql = "SELECT doc.id, doc.fname, doc.latitude, doc.longitude, doc.email, doc.phone, sp.title from doctor as doc INNER JOIN specialities as sp ON doc.sid = sp.id where fname like '%$keyword%'";
     }else{
         // $sql = "SELECT * from doctor";
-        $sql = "SELECT doc.id, doc.fname, doc.email, doc.phone, sp.title from doctor as doc INNER JOIN specialities as sp ON doc.sid = sp.id";
+        $sql = "SELECT doc.id, doc.fname, doc.latitude, doc.longitude, doc.email, doc.phone, sp.title from doctor as doc INNER JOIN specialities as sp ON doc.sid = sp.id";
     }
     $result = mysqli_query($conn, $sql);
     
@@ -141,6 +141,8 @@
                             <tr>
                                 <th>S.N.</th>
                                 <th>Doctor Name</th>
+                                <th>Latitude</th>
+                                <th>Longitude</th>
                                 <th>Email</th>
                                 <th>Speciality</th>
                                 <th>phone</th>
@@ -154,6 +156,8 @@
                                 ?>
                                     <td><?php echo $row['id'] ?></td>
                                     <td><?php echo $row['fname'] ?></td>
+                                    <td><?php echo $row['latitude'] ?></td>
+                                    <td><?php echo $row['longitude'] ?></td>
                                     <td><?php echo $row['email'] ?></td>
                                     <td><?php echo $row['title'] ?></td>
                                     <td><?php echo $row['phone'] ?></td>
