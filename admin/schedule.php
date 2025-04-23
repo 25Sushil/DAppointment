@@ -175,7 +175,7 @@
                                         <button><a href="../admin/schedule/delete.php?deleteid=<?php echo $row['id']; ?>"><svg class="icon icon-trash"><use xlink:href="#icon-trash"></use></svg></a></button>
                                     </td>
                             </tr>
-                                <?php   
+                                <?php
                                     }
                                 ?>
                         </tbody>

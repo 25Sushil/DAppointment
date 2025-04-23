@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 19, 2025 at 03:22 PM
+-- Generation Time: Apr 23, 2025 at 11:15 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -70,9 +70,12 @@ CREATE TABLE `appointment` (
 CREATE TABLE `doctor` (
   `id` int(11) NOT NULL,
   `fname` varchar(60) NOT NULL,
+  `latitude` double NOT NULL,
+  `longitude` double NOT NULL,
   `email` varchar(60) NOT NULL,
   `password` varchar(60) NOT NULL,
   `phone` varchar(60) NOT NULL,
+  `address` varchar(255) NOT NULL,
   `image_name` varchar(255) NOT NULL,
   `image_path` varchar(255) NOT NULL,
   `sid` int(11) DEFAULT NULL,
@@ -83,16 +86,12 @@ CREATE TABLE `doctor` (
 -- Dumping data for table `doctor`
 --
 
-INSERT INTO `doctor` (`id`, `fname`, `email`, `password`, `phone`, `image_name`, `image_path`, `sid`, `created_at`) VALUES
-(50, 'DR. Yadab Dhakal', 'yadab11@gmail.com', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '9805879212', '', 'uploads/', 21, '2024-06-18 04:03:10'),
-(51, 'DR. Shelly Shrestha', 'shelly11@gmail.com', '11b03e5b5b37441417e8065ec3bb6cc44ad798b3', '9805879212', 'doctor4.jpg', 'uploads/doctor4.jpg', 18, '2024-06-18 04:05:08'),
-(52, 'DR. Suresh Lamichhane', 'suresh11@gmail.com', '7054f8848d94a0d18b989fcb60d8dcd9cc934cdd', '9805879212', 'doctor5.jpg', 'uploads/doctor5.jpg', 20, '2024-06-18 04:06:16'),
-(53, 'DR. Dina Shrestha', 'dina11@gmail.com', '9b998cc104cbc9fdb0d304f1a66498b4b4b90b54', '9805879212', 'doctor9.jpg', 'uploads/doctor9.jpg', 17, '2024-06-18 04:07:49'),
-(54, 'PROF. DR. Narayan Thapa', 'narayan11@gmail.com', '7df17c3199154dadc1289633ecf1bc3bd1fef970', '9805879212', 'doctor10.jpg', 'uploads/doctor10.jpg', 16, '2024-06-18 04:08:54'),
-(57, 'Dr. Niranjan Acharya', 'niranjan11@gmail.com', 'c69f023f20a48ed3efd9eb1997ec5213980bfc13', '9814142536', 'niranjan.png', 'uploads/niranjan.png', 23, '2024-06-19 04:12:09'),
-(64, 'Dr. Manu Basnet', 'manu11@gmial.com', '19c44c62d4489e099eaf5adc0420377d521cb26e', '9836251478', 'manu.png', 'uploads/manu.png', 26, '2024-06-19 06:26:57'),
-(65, 'Dr. Neyaz Kausar', 'neyaz11@gmail.com', 'e8be5538dae2ac2c5dab13bc7b5dc45f4bbdb38e', '9805879212', 'doctor11.jpg', 'uploads/doctor11.jpg', 31, '2024-06-25 14:38:24'),
-(68, 'Dr. Banira Karki', 'banira11@gmail.com', 'e1bb38e9370720f80e32538a12c1397a95cd68b7', '9825142536', '', 'uploads/', 34, '2024-06-27 06:35:33');
+INSERT INTO `doctor` (`id`, `fname`, `latitude`, `longitude`, `email`, `password`, `phone`, `address`, `image_name`, `image_path`, `sid`, `created_at`) VALUES
+(52, 'DR. Suresh Lamichhane', 27.68995, 85.31897, 'suresh11@gmail.com', '7054f8848d94a0d18b989fcb60d8dcd9cc934cdd', '9805879212', 'Norvic Hospital', 'doctor5.jpg', 'uploads/doctor5.jpg', 20, '2024-06-18 04:06:16'),
+(64, 'Dr. Manu Basnet', 27.68995, 85.31897, 'manu11@gmial.com', '19c44c62d4489e099eaf5adc0420377d521cb26e', '9836251478', 'Norvic Hospital', 'manu.png', 'uploads/manu.png', 26, '2024-06-19 06:26:57'),
+(69, 'Dr. Kamal Lamsal', 274118.6, 851958.44, 'kamal11@gmail.com', '59b8ed7862e8255a370de15e6924afdd3fc584e0', '9895265262', '', 'image.jpg', 'uploads/image.jpg', 24, '2025-04-22 08:24:47'),
+(71, 'Dr. Banira Karki', 27.68995, 85.31897, 'banira11@gmail.com', '8cc1502ba48f5ac4cbc33078e7b2b4046c49c4f6', '9825151685', 'Norvic Hospital	', 'banira.jpg', 'uploads/banira.jpg', 34, '2025-04-22 09:27:08'),
+(97, 'Dr. Sudip Parajuli', 274118.6, 851958.44, 'sudip11@gmail.com', '64934d24ba72a391868f5c5eda33ee65fe53073f', '9814745214', '', 'sudip.jpg', 'uploads/sudip.jpg', 15, '2025-04-22 11:01:35');
 
 -- --------------------------------------------------------
 
@@ -149,8 +148,7 @@ CREATE TABLE `schedule` (
 --
 
 INSERT INTO `schedule` (`id`, `sid`, `time`, `did`, `date`) VALUES
-(41, 18, '12:08:00', 51, '2024-06-23'),
-(42, 17, '13:02:00', 53, '2024-06-25');
+(46, 15, '14:27:00', 97, '2025-04-23');
 
 -- --------------------------------------------------------
 
@@ -209,7 +207,7 @@ ALTER TABLE `appointment`
 --
 ALTER TABLE `doctor`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `idx_sid` (`sid`);
+  ADD KEY `doctor_ibfk_1` (`sid`);
 
 --
 -- Indexes for table `patient`
@@ -255,13 +253,13 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `appointment`
 --
 ALTER TABLE `appointment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT for table `doctor`
 --
 ALTER TABLE `doctor`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
 
 --
 -- AUTO_INCREMENT for table `patient`
@@ -279,7 +277,7 @@ ALTER TABLE `register`
 -- AUTO_INCREMENT for table `schedule`
 --
 ALTER TABLE `schedule`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `specialities`
@@ -314,8 +312,8 @@ ALTER TABLE `patient`
 -- Constraints for table `schedule`
 --
 ALTER TABLE `schedule`
-  ADD CONSTRAINT `schedule_ibfk_1` FOREIGN KEY (`sid`) REFERENCES `specialities` (`id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `schedule_ibfk_2` FOREIGN KEY (`did`) REFERENCES `doctor` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `schedule_ibfk_1` FOREIGN KEY (`sid`) REFERENCES `specialities` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `schedule_ibfk_2` FOREIGN KEY (`did`) REFERENCES `doctor` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

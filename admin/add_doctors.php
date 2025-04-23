@@ -13,7 +13,7 @@
 
     if(isset($_POST['submit'])){
         if(empty($_POST['fname'])){
-            $err['fname'] = "enter fullname";
+            $err['fname'] = "enter full name";
 
             $error ++;
         }else{
@@ -48,6 +48,13 @@
             $phone = $_POST['phone'];
         }
 
+        if(empty($_POST['address'])){
+            $err['address'] = "enter address";
+            $error ++;
+        }else{
+            $address = $_POST['address'];
+        }
+
         if(empty($_POST['speciality'])){
             $err['speciality'] = "select speciality";
             $error ++;
@@ -79,6 +86,7 @@
             $email = $_POST['email'];
             $speciality = $_POST['speciality'];
             $phone = $_POST['phone'];
+            $address = $_POST['address'];
 
             $image = $_FILES['image'];
             $name = $image['name'];
@@ -89,14 +97,15 @@
 
             $password = sha1($_POST['password']);
 
-            $sql = "INSERT INTO `doctor` (`fname`, `latitude`, `longitude`, `email`, `password`, `phone`, `image_name`, `image_path`, `sid`) VALUES ('$fname','$latitude', '$longitude', '$email', '$password','$phone', '$name', '$path', '$speciality');";
+            $sql = "INSERT INTO `doctor` (`fname`, `latitude`, `longitude`, `email`, `password`, `phone`, `address`, `image_name`, `image_path`, `sid`) VALUES ('$fname','$latitude', '$longitude', '$email', '$password','$phone', '$address', '$name', '$path', '$speciality');";
 
             $result = mysqli_query($conn, $sql);
             if($result){
                 echo 'Inserted Successfully';
-                header('location: ../admin/doctor.php');
+                // header('location: ../admin/doctor.php');
             }else{
-                echo 'Cannot Inserted';
+                // echo 'Cannot Inserted';
+                echo $query;
             }
         }
     }
@@ -146,13 +155,13 @@
                     </div><br>
                     
                     <div class="input-group">
-                        <label for="name">Latitude:</label><br>
+                        <label for="latitude">Latitude:</label><br>
                         <input type="text" id="latitude" name="latitude" placeholder="latitude" value="<?php echo isset($latitude) ? $latitude : ''; ?>">
                         <span><?php echo isset($err['latitude'])? $err['latitude']: '' ?></span>
                     </div><br>
 
                     <div class="input-group">
-                        <label for="name">Longitude:</label><br>
+                        <label for="longitude">Longitude:</label><br>
                         <input type="text" id="longitude" name="longitude" placeholder="longitude" value="<?php echo isset($longitude) ? $longitude : ''; ?>">
                         <span><?php echo isset($err['longitude'])? $err['longitude']: '' ?></span>
                     </div><br>
@@ -167,6 +176,12 @@
                         <label for="phone">Phone:</label><br>
                         <input type="tel" id="phone" name="phone" placeholder="Phone Number" value="<?php echo isset($phone) ? $phone : ''; ?>">
                         <span><?php echo isset($err['phone'])? $err['phone']: '' ?></span>
+                    </div><br>
+
+                    <div class="input-group">
+                        <label for="address">Address:</label><br>
+                        <input type="text" id="address" name="address" placeholder="Address" value="<?php echo isset($address) ? $address : ''; ?>">
+                        <span><?php echo isset($err['address'])? $err['address']: '' ?></span>
                     </div><br>
 
                     <div class="input-group">

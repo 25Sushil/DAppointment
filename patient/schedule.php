@@ -136,11 +136,11 @@
                                     // $did = $row['did'];
                                                 
                                     // // echo $did;
-                                             
+
                                     // if($did != ''){
                                     //     $dsql = "SELECT fname FROM doctor where id=$did;";
                                     //     $dresult = mysqli_query($conn, $dsql);
-                                             
+
                                     //     while($drow = mysqli_fetch_assoc($dresult)){
                                     //         echo $drow['fname'];
                                     //     }

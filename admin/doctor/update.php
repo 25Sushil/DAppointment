@@ -15,12 +15,20 @@
     $fname = $row['fname'];
     $phone = $row['phone'];
     $email = $row['email'];
+    $latitude = $row['latitude'];
+    $longitude = $row['longitude'];
+    $address = $row['address'];
+    $speciality = $row['sid'];
+    $image = $row['image_name'];
     // $password = $row['password'];
 
     if(isset($_POST['submit'])){
         $fname = $_POST['fname'];
-        $phone = $_POST['phone'];
+        $latitude = $_POST['latitude'];
+        $longitude = $_POST['longitude'];
         $email = $_POST['email'];
+        $phone = $_POST['phone'];
+        $address = $_POST['address'];
 
         $image = $_FILES['image'];
         $name = $image['name'];
@@ -31,7 +39,7 @@
         
         $password = sha1($_POST['password']);
 
-        $sql = "UPDATE `doctor` SET id=$id, fname='$fname', phone='$phone', email='$email', image_name='$name', image_path='$path', password='$password' where id=$id";
+        $sql = "UPDATE `doctor` SET id=$id, fname='$fname', latitude='$latitude', longitude ='$longitude', email='$email', password='$password', phone='$phone', address='$address', image_name='$name', image_path='$path' where id=$id";
         $result = mysqli_query($conn, $sql);
 
         if($result){
@@ -73,7 +81,7 @@
                 </ul>
             </div>
         </div>
-        <div class="main">     
+        <div class="main">
             <h2>Update</h2>
             <div class="container">
                 <form action="#" name="update" method="post">
@@ -81,13 +89,31 @@
                     <div class="input-group">
                         <label for="name">Name:</label><br>
                         <input type="text" id="fname" name="fname" placeholder="Doctor Name" value="<?php echo isset($fname) ? $fname : ''; ?>">
-                        <span><?php echo isset($err['fname'])? $err['fname']: '' ?></span>
+                        <span><?php echo isset($err['fname'])? $err['fname']: ''; ?></span>
                     </div><br>
                 
                     <div class="input-group">
                         <label for="phone">Phone:</label><br>
                         <input type="tel" id="phone" name="phone" value="<?php echo isset($phone) ? $phone:''; ?>">
                         <span><?php echo isset($err['phone'])? $err['phone']: ''; ?></span>
+                    </div><br>
+
+                    <div class="input-group">
+                        <label for="latitude">Latitude:</label><br>
+                        <input type="text" id="latitude" name="latitude" value="<?php echo isset($latitude) ? $latitude : ''; ?>">
+                        <span><?php echo isset($err['latitude'])? $err['latitude']: '' ?></span>
+                    </div><br>
+
+                    <div class="input-group">
+                        <label for="longitude">Longitude:</label><br>
+                        <input type="text" id="longitude" name="longitude" value="<?php echo isset($longitude) ? $longitude : ''; ?>">
+                        <span><?php echo isset($err['longitude'])? $err['longitude']: '' ?></span>
+                    </div><br>
+
+                    <div class="input-group">
+                        <label for="address">Address:</label><br>
+                        <input type="text" id="address" name="address" value="<?php echo isset($address) ? $address : ''; ?>">
+                        <span><?php echo isset($err['address'])? $err['address']: '' ?></span>
                     </div><br>
     
                     <div class="input-group">
@@ -99,7 +125,7 @@
                     <div class="input-group">
                         <label for="file">Choose Image:</label><br>
                         <input type="file" id="image" name="image" accept=".jpg, .png, .svg" value="<?php echo isset($image) ? $image : ''; ?>">
-                        <span><?php echo isset($err['image'])? $err['image']: '' ?></span>
+                        <span><?php echo isset($err['image'])? $err['image']: ''; ?></span>
                     </div><br>
 
                     <div class="input-group">
@@ -116,7 +142,7 @@
                                     }
                                 ?>
                         </select>
-                        <span><?php echo isset($err['speciality'])? $err['speciality']: '' ?></span>
+                        <span><?php echo isset($err['speciality'])? $err['speciality']: ''; ?></span>
                     </div><br>
     
                     <div class="input-group">

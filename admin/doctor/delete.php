@@ -13,7 +13,8 @@
         if($result){
             header ('location: ../../admin/doctor.php');
         }else{
-            die(mysqli_error($conn));
+            // die(mysqli_error($conn));
+            echo 'failed to delete';
         }
     }
 ?>

@@ -9,8 +9,10 @@
         $result = mysqli_query($conn, $sql);
         if($result){
             header ('location: ../../admin/schedule.php');
+            // echo '<script>alert("Schedule deleted successfully")</script>';
         }else{
-            die(mysqli_error($conn));
+            // die(mysqli_error($conn));
+            echo 'failed to delete';
         }
     }
 ?>

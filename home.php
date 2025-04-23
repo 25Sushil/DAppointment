@@ -90,29 +90,33 @@
                     $image_name = $row['image_name'];
                     $fname = $row['fname'];
                     $sid = $row['sid'];
+                    $address = $row['address'];
             ?>
             <div class="flip-card">
                 <div class="flip-card-inner">
-                    
+                    <!-- front side -->
                     <div class="flip-card-front">
                         <img src="admin/<?php echo $image_path ?>" alt="<?php echo $image_name ?>">
                     </div>
+                    
+                    <!-- back side -->
                     <div class="flip-card-back">
                         <p class="title"><?php echo "$fname"; ?></p>
                         <p><?php
                             $aid = $row['sid'];
-                                                    
+
                             // echo $sid;
-                                
+
                             if($aid != ''){
                                 $asql = "SELECT title FROM specialities where id=$aid";
                                 $aresult = mysqli_query($conn, $asql);
-                                
+
                                 while($arow = mysqli_fetch_assoc($aresult)){
                                     echo $arow['title'];
                                 }
                             }
                         ?></p>
+                        <!-- <p><?php echo "$address"; ?></p> -->
                     </div>
                 </div>
             </div>
