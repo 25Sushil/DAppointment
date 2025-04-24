@@ -4,11 +4,13 @@
 
     $keyword = isset($_GET['keyword'])  ? $_GET['keyword'] : NULL ; //ternary operator
     if(isset($keyword)){
-        $sql = "SELECT sp.id, sp.title, sc.time, doc.fname, sc.date from schedule as sc INNER JOIN specialities as sp ON sc.sid = sp.id INNER JOIN doctor as doc ON sc.did = doc.id where title like '%$keyword%'";
+        $sql = "SELECT  sp.id, sp.title, sc.id, sc.time, doc.fname, sc.date from schedule as sc INNER JOIN specialities as sp ON sc.sid = sp.id INNER JOIN doctor as doc ON sc.did = doc.id where title like '%$keyword%'";
     }else{
-        $sql = "SELECT sp.id, sp.title, sc.time, doc.fname, sc.date from schedule as sc INNER JOIN specialities as sp ON sc.sid = sp.id INNER JOIN doctor as doc ON sc.did = doc.id";
+        $sql = "SELECT sp.id, sp.title, sc.id, sc.time, doc.fname, sc.date from schedule as sc INNER JOIN specialities as sp ON sc.sid = sp.id INNER JOIN doctor as doc ON sc.did = doc.id";
     }
     $result = mysqli_query($conn, $sql);
+    // $srow = mysqli_fetch_assoc($result);
+    // $scid = $srow['id'];
 
     $useremail = $_SESSION["username_admin"];
     $usql = "SELECT name FROM admin where email='$useremail';";

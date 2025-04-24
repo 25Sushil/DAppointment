@@ -12,9 +12,9 @@
     $result = mysqli_query($conn, $sql);
     
     $row = mysqli_fetch_assoc($result);
-    $sid = $row['sid'];
+    $speciality = $row['sid'];
     $time = $row['time'];
-    $doctor = $row['fname'];
+    $doctor = $row['did'];
     $date = $row['date'];
 
     if(isset($_POST['submit'])){
@@ -23,7 +23,7 @@
         $doctor = $_POST['doctor'];
         $date = $_POST['date'];
 
-        $sql = "UPDATE `schedule` SET sid='$speciality', time='$time', fname='$doctor', date='$date' where id=$id";
+        $sql = "UPDATE `schedule` SET sid='$speciality', time='$time', did='$doctor', date='$date' where id=$id";
         $result = mysqli_query($conn, $sql);
 
         if($result){
@@ -65,7 +65,7 @@
                 </ul>
             </div>
         </div>
-        <div class="main">     
+        <div class="main">
             <h2>Update</h2><br>
             <div class="container">
                 <form action="" name="update" method="post">
@@ -74,43 +74,46 @@
                         <label for="speciality">Select Specilities:</label><br>
                         <select name="speciality" id="speciality">
                             <option value="">Select Speciality</option>
-                            <?php 
+                            <?php
                                 $ssql = "SELECT id, title FROM specialities";
                                 $sresult = mysqli_query($conn, $ssql);
 
-                                while($row  = mysqli_fetch_assoc($sresult)){
-                                    echo "<option value='" . $row['id'] . "'>" . $row['title']  . "</option>";
+                                while($srow = mysqli_fetch_assoc($sresult)){
+                                    $selected = ($srow['id'] == $sid) ? 'selected="selected"' : '';
+                                    echo "<option value='" . $srow['id'] . "' $selected>" . $srow['title'] . "</option>";
                                 }
                             ?>
                         </select>
                         <span><?php echo isset($err['speciality'])? $err['speciality']: '' ?></span>
                     </div><br>
-    
-                    <div class="input-group">
-                        <label for="time">Time:</label>
-                        <input type="time" id="time" name="time" value="<?php echo isset($time) ? $time : ''; ?>">
-                    </div><br>
-    
+
                     <div class="input-group">
                         <label for="doctor">Select Doctor:</label><br>
                         <select name="doctor" id="doctor">
                             <option value="">Select Doctor</option>
-                                <?php
-                                    $ssql = "SELECT id, fname FROM doctor";
+                            <?php
+                                $dsql = "SELECT id, fname FROM doctor";
+                                $dresult = mysqli_query($conn, $dsql);
 
-                                    $s_result = mysqli_query($conn, $ssql);
-
-                                    while($row  = mysqli_fetch_assoc($s_result)){
-                                        echo "<option value='" . $row['id'] . "'>" . $row['fname']  . "</option>";
-                                    }
-                                ?>
+                                while($drow = mysqli_fetch_assoc($dresult)){
+                                    $selected = ($drow['id'] == $doctor) ? 'selected="selected"' : '';
+                                    echo "<option value='" . $drow['id'] . "' $selected>" . $drow['fname'] . "</option>";
+                                }
+                            ?>
                         </select>
                         <span><?php echo isset($err['doctor'])? $err['doctor']: '' ?></span>
+                    </div><br>
+
+                    <div class="input-group">
+                        <label for="time">Time:</label>
+                        <input type="time" id="time" name="time" value="<?php echo isset($time) ? $time : ''; ?>">
+                        <span><?php echo isset($err['time'])? $err['time']: ''; ?></span>
                     </div><br>
     
                     <div class="input-group one-third">
                         <label for="date">Date:</label>
                         <input type="date" id="date" name="date" value="<?php echo isset($date) ? $date : ''; ?>">
+                        <span><?php echo isset($err['date'])? $err['date']: ''; ?></span>
                     </div>
             
                     <div class="buttons">
