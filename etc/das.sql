@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 23, 2025 at 11:15 AM
+-- Generation Time: Apr 24, 2025 at 02:54 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -143,13 +143,6 @@ CREATE TABLE `schedule` (
   `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `schedule`
---
-
-INSERT INTO `schedule` (`id`, `sid`, `time`, `did`, `date`) VALUES
-(46, 15, '14:27:00', 97, '2025-04-23');
-
 -- --------------------------------------------------------
 
 --
@@ -277,7 +270,7 @@ ALTER TABLE `register`
 -- AUTO_INCREMENT for table `schedule`
 --
 ALTER TABLE `schedule`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `specialities`
