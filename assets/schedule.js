@@ -7,7 +7,7 @@ function calendarMin(){
     if(month < 10)
         month = '0' + month.toString();
     if(day < 10)
-     day = '0' + day.toString();
+        day = '0' + day.toString();
     var maxDate = year + '-' + month + '-' + day;
     document.querySelector('#inputdate').setAttribute('min', maxDate);
 }

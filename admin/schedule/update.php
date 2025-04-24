@@ -166,5 +166,49 @@
     </svg>
 
     <script src="../../assets/update.js"></script>
+    <script>
+        function isTimeActive(time) {
+            try {
+                const { hours, minutes } = parseTime(time);
+                const totalMinutes = hours * 60 + minutes;
+                return totalMinutes >= 540 && totalMinutes < 1140; // 9:00 AM (540) to 7:00 PM (1140)
+            } catch (e) {
+                return false;
+            }
+        }
+
+        function parseTime(time) {
+            if (time instanceof Date) {
+                return {
+                    hours: time.getHours(),
+                    minutes: time.getMinutes()
+                };
+            }
+
+            const timeString = time.trim().toUpperCase();
+            const pattern = /^(\d{1,2}):(\d{2})\s*(AM|PM)?$/;
+            const match = timeString.match(pattern);
+
+            if (!match) throw new Error('Invalid time format');
+
+            let hours = parseInt(match[1], 10);
+            const minutes = parseInt(match[2], 10);
+            const period = match[3] || '';
+
+            // Convert to 24-hour format
+            if (period === 'PM' && hours !== 12) {
+                hours += 12;
+            } else if (period === 'AM' && hours === 12) {
+                hours = 0;
+            }
+
+            // Validate time values
+            if (hours < 0 || hours >= 24 || minutes < 0 || minutes >= 60) {
+                throw new Error('Invalid time');
+            }
+
+            return { hours, minutes };
+        }
+    </script>
 </body>
 </html>
