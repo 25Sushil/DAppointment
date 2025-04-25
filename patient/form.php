@@ -20,21 +20,21 @@
             $err['fullname'] = "Enter full name";
             $error ++;
         } else {
-            $fullname = $_POST['fullname'];  
+            $fullname = $_POST['fullname'];
         }
 
         if(empty($_POST['email'])){
             $err['email'] = "Enter email address";
             $error ++;
         } else {
-            $email = $_POST['email'];  
+            $email = $_POST['email'];
         }
 
         if(empty($_POST['address'])){
             $err['address'] = "Enter your address";
             $error ++;
         } else {
-            $address = $_POST['address'];  
+            $address = $_POST['address'];
         }
 
         if(empty($_POST['bloodgrp'])){
@@ -62,21 +62,21 @@
             $err['tel'] = "Enter phone number";
             $error ++;
         } else {
-            $tel = $_POST['tel'];  
+            $tel = $_POST['tel'];
         }
 
         if(empty($_POST['date'])){
             $err['date'] = "Enter date";
             $error ++;
         } else {
-            $date = $_POST['date'];  
+            $date = $_POST['date'];
         }
 
         if(empty($_POST['time'])){
             $err['time'] = "Enter time";
             $error ++;
         } else {
-            $time = $_POST['time'];  
+            $time = $_POST['time'];
         }
         
         if($error == 0){
@@ -152,20 +152,20 @@
                     <div class="input-group">
                         <input type="text" id="fullname" name="fullname" placeholder="Enter Your Full Name" value="<?php echo $urow['fullname']; ?>">
                         <span><?php echo isset($err['fullname'])? $err['fullname']: ''; ?></span>
-                    </div> 
+                    </div>
         
                     <div class="input-group">
                         <input type="email" name="email" id="email" placeholder="Email Address" value="<?php echo isset($email) ? $email : ''; ?>">
                         <span><?php echo isset($err['email'])? $err['email']: ''; ?></span>
-                    </div> 
+                    </div>
         
                     <div class="input-group">
-                        <input type="text" name= "address" id="address" placeholder="Enter Your address" value="<?php echo isset($address) ? $address : ''; ?>">
+                        <input type="text" id="address" name="address" placeholder="Address" value="<?php echo $urow['address']; ?>">
                         <span><?php echo isset($err['address'])? $err['address']: ''; ?></span>
-                    </div> 
+                    </div>
         
                     <div class="input-group">
-                        <select name="bloodgrp" id="bg" value="<?php echo isset($email) ? $email : ''; ?>">
+                        <select name="bloodgrp" id="bg" value="<?php echo isset($bloodgrp) ? $bloodgrp : ''; ?>">
                             <option value="">Select Blood Group</option>
                             <option value="O+">O+</option>
                             <option value="O-">O-</option>
@@ -177,7 +177,7 @@
                             <option value="B-">B-</option>
                         </select>
                         <span><?php echo isset($err['bloodgrp'])? $err['bloodgrp']: ''; ?></span>
-                    </div> 
+                    </div>
         
                     <div class="input-group">
                         <select name="speciality" id="speciality">
@@ -209,12 +209,13 @@
                             ?>
                         </select>
                         <span><?php echo isset($err['doctor'])? $err['doctor']: '' ?></span>
-                    </div>      
+                    </div>
         
                     <div class="input-group one-third">
                         <input type="tel" id="tel" name="tel" placeholder="Phone Number" value="<?php echo $urow['tel']; ?>">
                         <span><?php echo isset($err['tel'])? $err['tel']: ''; ?></span>
                     </div>
+                    
         
                     <div class="input-group one-third">
                         <input type="date" id="inputdate" name="date" value="<?php echo isset($date) ? $date : ''; ?>">
@@ -230,7 +231,7 @@
                         <button type="submit" name="submit" value="register">Appoint Now</button>
                     </div>
         
-                </form>  
+                </form>
             </div>
         </section>
     </section>

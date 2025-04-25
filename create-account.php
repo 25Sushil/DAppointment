@@ -9,37 +9,45 @@
             $err['fullname'] = "enter fullname";
             $error ++;
         } else {
-            $fullname = $_POST['fullname'];  
+            $fullname = $_POST['fullname'];
         }
 
         if(empty($_POST['email'])){
             $err['email'] = "enter email";
             $error ++;
         } else {
-            $email = $_POST['email'];  
+            $email = $_POST['email'];
         }
 
         if(empty($_POST['tel'])){
-            $err['tel'] = "enter phone numebr";
+            $err['tel'] = "enter phone number";
             $error ++;
         } else {
-            $tel = $_POST['tel'];  
+            $tel = $_POST['tel'];
+        }
+
+        if(empty($_POST['address'])){
+            $err['address'] = "enter your address";
+            $error ++;
+        } else {
+            $address = $_POST['address'];
         }
 
         if(empty($_POST['password'])){
             $err['password'] = "enter password";
             $error ++;
         } else {
-            $password = $_POST['password'];  
+            $password = $_POST['password'];
         }
 
         if($error == 0){
-            $fullname = $_POST['fullname']; 
+            $fullname = $_POST['fullname'];
             $email = $_POST['email'];
             $tel = $_POST['tel'];
+            $address = $_POST['address'];
             $password = sha1($_POST['password']);
     
-            $sql = "INSERT INTO `register` (`fullname`, `email`, `tel`, `password`) VALUES ('$fullname','$email', '$tel', '$password')";
+            $sql = "INSERT INTO `register` (`fullname`, `email`, `tel`, `address`, `password`) VALUES ('$fullname','$email', '$tel', '$address', '$password')";
             
             $result = mysqli_query($conn , $sql);
             if($result){
@@ -61,19 +69,19 @@
     <title>Register</title>
     <link rel="stylesheet" href="assets/register.css">
     <style>
-        span{ 
-            color : red; 
+        span{
+            color : red;
             font-size: 15px;
         }
     </style>
-        
+
 </head>
 <body class="hasbg bgfull-fixed" style="background-image: url('assets/img/web_bg.jpg');">
 
     <div class="register-container">
         <form class="register-form" action="#" name="register" method="post">
             <h2>Create Account Now!!</h2><br>
-           
+
             <div class="input-group">
                 <label for="fullname">Full Name</label>
                 <input type="text" id="fullname" name="fullname" value="<?php echo isset($fullname) ? $fullname : ''; ?>">
@@ -87,9 +95,15 @@
             </div>
 
             <div class="input-group">
-                <label for="tel">Phone Number</label>
+                <label for="tel">Phone</label>
                 <input type="tel" id="tel" name="tel" value="<?php echo isset($tel) ? $tel : ''; ?>">
                 <span><?php echo isset($err['tel'])? $err['tel'] : '' ;?></span>
+            </div>
+
+            <div class="input-group">
+                <label for="address">Address</label>
+                <input type="text" id="address" name="address" value="<?php echo isset($address) ? $address : ''; ?>">
+                <span><?php echo isset($err['address'])? $err['address'] : '' ;?></span>
             </div>
 
             <div class="input-group">

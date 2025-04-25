@@ -2,11 +2,11 @@
     include('../connection.php');
     include("../session.php");
 
-    $sql = "SELECT * FROM register ";
-    $result = mysqli_query($conn, $sql);
+    // $sql = "SELECT * FROM register";
+    // $result = mysqli_query($conn, $sql);
 
     $useremail = $_SESSION["username_patient"];
-    $usql = "SELECT fullname FROM register where email='$useremail';";
+    $usql = "SELECT * FROM register where email='$useremail';";
     $uresult = mysqli_query($conn, $usql);
     $urow = mysqli_fetch_assoc($uresult);
 ?>
@@ -54,11 +54,11 @@
             <h1>Config</h1><br>
             <div class="config">
                 <div>
-                    <button class="edit"><a href="../patient/patient/update.php?updateid='<?php echo $useremail ?>'"><svg class="icon icon-pencil"><use xlink:href="#icon-pencil"></use></svg>Edit your account</a></button>
+                    <button class="edit"><a href="../patient/patient/update.php?updateid=<?php echo $useremail ?>"><svg class="icon icon-pencil"><use xlink:href="#icon-pencil"></use></svg>Edit your account</a></button>
                 </div>
                 <br>
                 <div>
-                    <button class="delete"><a href="../patient/patient/delete.php?deleteid='<?php echo $useremail ?>'"><svg class="icon icon-trash"><use xlink:href="#icon-trash"></use></svg>Permanently  Delete</a></button>
+                    <button class="delete"><a href="../patient/patient/delete.php?deleteid=<?php echo $useremail ?>"><svg class="icon icon-trash"><use xlink:href="#icon-trash"></use></svg>Permanently  Delete</a></button>
                 </div>
             </div>
             

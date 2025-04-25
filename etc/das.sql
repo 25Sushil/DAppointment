@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 24, 2025 at 02:54 AM
+-- Generation Time: Apr 25, 2025 at 11:53 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -61,6 +61,13 @@ CREATE TABLE `appointment` (
   `status` tinyint(2) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `appointment`
+--
+
+INSERT INTO `appointment` (`id`, `fullname`, `email`, `phone`, `bg`, `address`, `sid`, `did`, `date`, `time`, `status`) VALUES
+(56, 'Sushil Bohora', 'bohorasushil28@gmail.com', '9825151685', 'O-', 'Thankot', 26, 64, '2025-04-25', '15:17:00', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -107,6 +114,13 @@ CREATE TABLE `patient` (
   `created-at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `patient`
+--
+
+INSERT INTO `patient` (`id`, `aid`, `sid`, `did`, `created-at`) VALUES
+(114, 56, 26, 64, '2025-04-25 09:53:30');
+
 -- --------------------------------------------------------
 
 --
@@ -118,6 +132,7 @@ CREATE TABLE `register` (
   `fullname` varchar(60) NOT NULL,
   `email` varchar(60) NOT NULL,
   `tel` varchar(15) NOT NULL,
+  `address` varchar(255) NOT NULL,
   `password` varchar(60) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -125,9 +140,10 @@ CREATE TABLE `register` (
 -- Dumping data for table `register`
 --
 
-INSERT INTO `register` (`id`, `fullname`, `email`, `tel`, `password`) VALUES
-(9, 'Binit Gurung', 'binit111@gmail.com', '9840176421', 'eff4098c52ab9e185ebbf351e5434e69d93cb04b'),
-(14, 'Sushil Bohora', 'bohorasushil28@gmail.com', '9825151685', '66e8bda09044047ad04b9ea45bf36ad36fda786f');
+INSERT INTO `register` (`id`, `fullname`, `email`, `tel`, `address`, `password`) VALUES
+(9, 'Binit Gurung', 'binit111@gmail.com', '9840176421', 'Kathmandu', 'eff4098c52ab9e185ebbf351e5434e69d93cb04b'),
+(14, 'Sushil Bohora', 'bohorasushil28@gmail.com', '9825151685', 'Thankot', '66e8bda09044047ad04b9ea45bf36ad36fda786f'),
+(17, 'Sid Ghim', 'sid111@gmail.com', '9825151685', '', 'd73e26bb1d0dd0c3c8ee7a0453eb1fc70e7dd81f');
 
 -- --------------------------------------------------------
 
@@ -142,6 +158,13 @@ CREATE TABLE `schedule` (
   `did` int(11) NOT NULL,
   `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `schedule`
+--
+
+INSERT INTO `schedule` (`id`, `sid`, `time`, `did`, `date`) VALUES
+(52, 15, '04:56:00', 97, '2025-04-24');
 
 -- --------------------------------------------------------
 
@@ -246,7 +269,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `appointment`
 --
 ALTER TABLE `appointment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT for table `doctor`
@@ -258,19 +281,19 @@ ALTER TABLE `doctor`
 -- AUTO_INCREMENT for table `patient`
 --
 ALTER TABLE `patient`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
 
 --
 -- AUTO_INCREMENT for table `register`
 --
 ALTER TABLE `register`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `schedule`
 --
 ALTER TABLE `schedule`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- AUTO_INCREMENT for table `specialities`
