@@ -15,8 +15,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Schedule</title>
+    <title>Nearest Doctor</title>
     <link rel="stylesheet" href="../assets/dash1.css">
+    <style>
+        .search-doctor {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 30px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            background-color: #fdfdfd;
+        }
+
+        .search-doctor div {
+            margin-bottom: 10px;
+        }
+
+        .search-doctor label,
+        .search-doctor select,
+        .search-doctor input,
+        .search-doctor button {
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        .search-doctor select,
+        .search-doctor input[type="text"] {
+            padding: 10px;
+            width: 30%;
+            max-width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            margin-top: 5px;
+        }
+
+        .search-doctor select{
+            display: flex;
+            flex-wrap: wrap;
+            /* gap: 20px; */
+        }
+
+        .search-doctor button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .search-doctor button:hover {
+            background-color: #0056b3;
+        }
+
+        .search-doctor span {
+            color: red;
+            font-size: 10px;
+        }
+
+        @media screen and (max-width: 480px) {
+            .search-doctor {
+                padding: 20px;
+            }
+
+            .search-doctor input,
+            .search-doctor select {
+                font-size: 14px;
+            }
+        }
+
+    </style>
 </head>
 <body>
     <section class="dashboard">
@@ -34,7 +104,7 @@
                     <li><a href="../patient/form.php"><svg class="icon icon-text-document"><use xlink:href="#icon-text-document"></use></svg>Appoint Now</a></li>
                     <li><a href="../patient/doctor.php"><svg class="icon icon-medical_services"><use xlink:href="#icon-medical_services"></use></svg>Doctors</a></li>
                     <li><a href="../patient/schedule.php"><svg class="icon icon-access_alarms"><use xlink:href="#icon-access_alarms"></use></svg>Schedule</a></li>
-                    <li  class="active"><a href="../patient/nearme.php"><svg class="icon icon-location"><use xlink:href="#icon-location"></use></svg>Find Near Me</a></li>
+                    <li class="active"><a href="../patient/nearme.php"><svg class="icon icon-location"><use xlink:href="#icon-location"></use></svg>Find Near Me</a></li>
                     <li><a href="../patient/appoint.php"><svg class="icon icon-bookmark_outline"><use xlink:href="#icon-bookmark_outline"></use></svg>Appointment</a></li>
                     <li><a href="../patient/config.php"><svg class="icon icon-cog"><use xlink:href="#icon-cog"></use></svg>Settings</a></li>
                 </ul>
@@ -43,7 +113,7 @@
         <div class="main">
             <div class="head">
                 <div class="head-bar">
-                    <h2>Schedule's</h2>
+                    <h2>Find Doctor's Near </h2>
                 </div>
                 <div class="date-container">
                     <h1>Today's Date</h1>
@@ -51,88 +121,68 @@
                 </div>
             </div>
                 
-            <div class="status">
-                <div class="status-bar">
-                    <h2>Status</h2>
+            <div class="search-doctor">
+                <div>
+                    <button id="getLocation">Get My Location</button>
+                        <label for="">
+                            latitude:
+                            <input type="text" placeholder="Latitude" id="lat" readonly />
+                            
+                        </label>
+                        <label for="">
+                        Longitude:
+                        <input type="text" placeholder="Longitude" id="long" readonly />
+                        </label>
+                        <script src="../assets/geolocation.js"></script>
                 </div>
-                <div class="dash-collection">
-                    <div class="doc">
-                        <?php
-                            $dsql = "SELECT * FROM doctor";
-                            $dresult = mysqli_query($conn, $dsql);
 
-                            if($drow = mysqli_num_rows($dresult)){
-                                echo '<h3>'.$drow.'</h3>';
-                            }else{
-                                echo '<h3>0</h3>';
-                            }
-                        ?>
-                        <svg class="icon icon-medical_services"><use xlink:href="#icon-medical_services"></use></svg><br>
-                        <h4>Doctor's</h4><br>
-                    </div>
-            
-                    <div class="doc">
-                        <?php
-                            $psql = "SELECT * FROM patient";
-                            $presult = mysqli_query($conn, $psql);
+                <div class="select">
+                    Choose Speciality:
+                    <select name="speciality" id="speciality">
+                            <option value="">Select Speciality</option>
+                            <?php
+                                $ssql = "SELECT id, title FROM specialities";
 
-                            if($prow = mysqli_num_rows($presult)){
-                                echo '<h3>'.$prow.'</h3>';
-                            }else{
-                                echo '<h3>0</h3>';
-                            }
-                        ?>
-                        <svg class="icon icon-accessible_forward"><use xlink:href="#icon-accessible_forward"></use></svg><br>
-                        <h4>Patient's</h4><br>
-                    </div>
-            
-                    <div class="doc">
-                        <?php
-                            $asql = "SELECT * FROM appointment";
-                            $aresult = mysqli_query($conn, $asql);
+                                $s_result = mysqli_query($conn, $ssql);
 
-                            if($arow = mysqli_num_rows($aresult)){
-                                echo '<h3>'.$arow.'</h3>';
-                            }else{
-                                echo '<h3>0</h3>';
-                            }
-                        ?>
-                        <svg class="icon icon-bookmark_outline"><use xlink:href="#icon-bookmark_outline"></use></svg><br>
-                        <h4>Appointment's</h4><br>
-                    </div>
-            
-                    <div class="doc">
-                        <?php
-                            $ssql = "SELECT * FROM schedule";
-                            $sresult = mysqli_query($conn, $ssql);
+                                while($row  = mysqli_fetch_assoc($s_result)){
+                                    echo "<option value='" . $row['id'] . "'>" . $row['title']  . "</option>";
+                                }
+                            ?>
+                    </select>
+                    <span><?php echo isset($err['speciality'])? $err['speciality']: ''; ?></span>
 
-                            if($srow = mysqli_num_rows($sresult)){
-                                echo '<h3>'.$srow.'</h3>';
-                            }else{
-                                echo '<h3>0</h3>';
-                            }
-                        ?>
-                        <svg class="icon icon-activity"><use xlink:href="#icon-activity"></use></svg><br>
-                        <h4>Schedule's</h4><br>
-                    </div>
+                    Radius:
+                    <select name="radius" id="radius">
+                            <option value="">Select Radius</option>
+                            <option value="5">5 km</option>
+                            <option value="10">10 km</option>
+                            <option value="15">15 km</option>
+                            <option value="20">20 km</option>
+                            <option value="25">25 km</option>
+                    </select>
+                    <span><?php echo isset($err['radius'])? $err['radius']: ''; ?></span>
+                </div>
+                
+
+                <div class="button">
+                    <button type="submit" class="btn">Search</button>
                 </div>
             </div><br>
 
-            
-
             <div class="sessions">
                 <div>
-                <h2>All Schedule</h2><br>
+                <h2>Doctor's Near You</h2><br>
                 </div>
 
-                <div class="cards">
+                <!-- <div class="cards">
                     <?php
                         while($row = mysqli_fetch_assoc($result)){
                     ?>
                     <div class="card">
                         <div class="title">
                         <div class="content">
-                            <p>Doctor: 
+                            <p>Doctor:
                                 <?php echo $row['fname'];
                                     // $did = $row['did'];
                                                 
@@ -160,7 +210,7 @@
                 <?php
                 }
             ?>
-            </div>
+            </div> -->
             
 
         </div>
@@ -208,8 +258,8 @@
         </defs>
     </svg>
 
-    <script>
-        document.getElementById('date').innerText = new Date().toDateString();
-    </script>
+    <!-- <script src="../assets/geolocation.js"></script> -->
+    <script>document.getElementById('date').innerText = new Date().toDateString();</script>
+    
 </body>
 </html>
