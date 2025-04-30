@@ -34,6 +34,7 @@
                     <li><a href="../patient/form.php"><svg class="icon icon-text-document"><use xlink:href="#icon-text-document"></use></svg>Appoint Now</a></li>
                     <li><a href="../patient/doctor.php"><svg class="icon icon-medical_services"><use xlink:href="#icon-medical_services"></use></svg>Doctors</a></li>
                     <li><a href="../patient/schedule.php"><svg class="icon icon-access_alarms"><use xlink:href="#icon-access_alarms"></use></svg>Schedule</a></li>
+                    <li><a href="../patient/nearme.php"><svg class="icon icon-location"><use xlink:href="#icon-location"></use></svg>Find Near Me</a></li>
                     <li><a href="../patient/appoint.php"><svg class="icon icon-bookmark_outline"><use xlink:href="#icon-bookmark_outline"></use></svg>Appointment</a></li>
                     <li  class="active"><a href="../patient/config.php"><svg class="icon icon-cog"><use xlink:href="#icon-cog"></use></svg>Settings</a></li>
                 </ul>
@@ -114,6 +115,10 @@
             </symbol>
             <symbol id="icon-trash" viewBox="0 0 20 20">
                 <path d="M6 2l2-2h4l2 2h4v2h-16v-2h4zM3 6h14l-1 14h-12l-1-14zM8 8v10h1v-10h-1zM11 8v10h1v-10h-1z"></path>
+            </symbol>
+            <!-- location -->
+            <symbol id="icon-location" viewBox="0 0 32 32">
+                <path d="M16 0c-5.523 0-10 4.477-10 10 0 10 10 22 10 22s10-12 10-22c0-5.523-4.477-10-10-10zM16 16c-3.314 0-6-2.686-6-6s2.686-6 6-6 6 2.686 6 6-2.686 6-6 6z"></path>
             </symbol>
         </defs>
     </svg>
