@@ -116,7 +116,7 @@
                                 }
                             }
                         ?></p>
-                        <!-- <p><?php echo "$address"; ?></p> -->
+                        <p><?php echo "$address"; ?></p>
                     </div>
                 </div>
             </div>

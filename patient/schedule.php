@@ -132,7 +132,7 @@
                     <div class="card">
                         <div class="title">
                         <div class="content">
-                            <p>Doctor: 
+                            <p>Doctor:
                                 <?php echo $row['fname'];
                                     // $did = $row['did'];
                                                 

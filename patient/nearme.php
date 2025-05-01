@@ -2,7 +2,7 @@
     include('../connection.php');
     include("../session.php");
 
-    $sql = "SELECT sp.title, sc.time, doc.fname, sc.date from schedule as sc INNER JOIN specialities as sp ON sc.sid = sp.id INNER JOIN doctor as doc ON sc.did = doc.id";
+    $sql = "SELECT sp.title, sc.time, doc.fname, doc.address, sc.date from schedule as sc INNER JOIN specialities as sp ON sc.sid = sp.id INNER JOIN doctor as doc ON sc.did = doc.id";
     $result = mysqli_query($conn, $sql);
 
     $useremail = $_SESSION["username_patient"];
@@ -10,18 +10,16 @@
     $uresult = mysqli_query($conn, $usql);
     $urow = mysqli_fetch_assoc($uresult);
 
-
-    // Get user input
-    $user_lat = $_POST['latitude'];
-    $user_lng = $_POST['longitude'];
-    // $user_lat = 27.69224;
-    // $user_lng = 85.23403;
-    $speciality = $_POST['speciality'];
-    $radius = $_POST['radius']; // in kilometers
+    // $user_lat = isset($_POST['latitude']) ? $_POST['latitude'] : '';
+    // $user_lng = isset($_POST['longitude']) ? $_POST['longitude'] : '';
+    $user_lat = 27.69224;
+    $user_lng = 85.23403;
+    $speciality = isset($_POST['speciality']) ? $_POST['speciality'] : '';
+    $radius = isset($_POST['radius']) ? $_POST['radius'] : ''; // in kilometers
 
     // Prepare SQL with Haversine
     $sql = "
-        SELECT 
+        SELECT
             id,
             fname,
             sid,
@@ -44,6 +42,7 @@
     $stmt->bind_param("ddssd", $user_lat, $user_lng, $user_lat, $speciality, $radius);
     $stmt->execute();
     $result = $stmt->get_result();
+        
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -163,27 +162,27 @@
                 
             <div class="search-doctor">
                 
-                <div>
+                <!-- <div>
                     <button id="getLocation" class="get-btn">My Location</button>
                     <script src="../assets/geolocation.js"></script>
-                </div><br>
+                </div><br> -->
 
-                <form action="find_nearby_doctors.php" method="POST" class="select">
-                        <div>
+                <form action="" method="POST" class="select">
+                        <!-- <div>
                             <label for="">
                                 Latitude:
-                                <input type="text" placeholder="Latitude" id="lat" name="latitude" readonly />
+                                <input type="text" placeholder="Latitude" id="lat" name="latitude" value="<?php echo isset($latitude) ? $latitude : ''; ?>" readonly />
                             </label>
                                 
                             <label for="">
                                 Longitude:
-                                <input type="text" placeholder="Longitude" id="long" name="longitude" readonly />
+                                <input type="text" placeholder="Longitude" id="long" name="longitude" value="<?php echo isset($longitude) ? $longitude : ''; ?>" readonly />
                             </label>
-                        </div>
+                        </div> -->
 
                     <div>
                         Choose Speciality:
-                        <select name="speciality" id="speciality">
+                        <select name="speciality" id="speciality" value="<?php echo isset($speciality) ? $speciality : ''; ?>" required>
                                 <option value="">Select Speciality</option>
                                 <?php
                                     $ssql = "SELECT id, title FROM specialities";
@@ -199,7 +198,7 @@
 
 
                         Radius:
-                        <select name="radius" id="radius">
+                        <select name="radius" id="radius" value="<?php echo isset($radius) ? $radius : ''; ?>" required>
                                 <option value="">Select Radius</option>
                                 <option value="5">5 km</option>
                                 <option value="10">10 km</option>
@@ -222,31 +221,37 @@
                 <h2>Doctor's Near You</h2><br>
                 </div>
 
-                <!-- <div class="cards">
+                <div class="cards">
                     <?php
-                        while($row = mysqli_fetch_assoc($result)){
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
                     ?>
                     <div class="card">
                         <div class="title">
                         <div class="content">
-                            <p>Doctor:
-                                <?php echo $row['fname'];
-                                    // $did = $row['did'];
-                                                
-                                    // // echo $did;
-
-                                    // if($did != ''){
-                                    //     $dsql = "SELECT fname FROM doctor where id=$did;";
-                                    //     $dresult = mysqli_query($conn, $dsql);
-
-                                    //     while($drow = mysqli_fetch_assoc($dresult)){
-                                    //         echo $drow['fname'];
-                                    //     }
-                                    // }
-                                ?></p><br>
-                            <p>Speciality: <?php echo $row['title'];?></p><br>
-                            <p>Date: <?php echo $row['date'] ?></p><br>
-                            <p>Time: <?php echo $row['time'] ?></p><br>
+                            <p>Doctor: <b><?php echo $row['fname']; ?></b></p><br>
+                            <p>Speciality:
+                                <b>
+                                    <?php
+                                        $sp_sql = "SELECT title FROM specialities WHERE id = ?";
+                                        $sp_stmt = $conn->prepare($sp_sql);
+                                        $sp_stmt->bind_param("s", $row['sid']);
+                                        $sp_stmt->execute();
+                                        $sp_result = $sp_stmt->get_result();
+                                        $sp_row = $sp_result->fetch_assoc();
+                                        echo $sp_row['title'];
+                                    ?></p><br>
+                                </b>
+                            <p>Distance: <b><?php echo $row['distance']; ?> km away.</b></p><br>
+                            <p>Address:
+                                <?php
+                                    $addr_sql = "SELECT address FROM doctor WHERE id = ?";
+                                    $addr_stmt = $conn->prepare($addr_sql);
+                                    $addr_stmt->bind_param("s", $row['id']);
+                                    $addr_stmt->execute();
+                                    $addr_result = $addr_stmt->get_result();
+                                    $addr_row = $addr_result->fetch_assoc();
+                                    echo $addr_row['address'] ?></p><br>
                         </div>
                             
                         <div class="actions">
@@ -256,10 +261,14 @@
                 </div>
                 <?php
                 }
+                    } else {
+                        echo "<p>No doctors found within {$radius} km.</p>";
+                    }
+                    $stmt->close();
+                    $conn->close();
             ?>
-            </div> -->
+            </div>
             
-
         </div>
     </section>
 
