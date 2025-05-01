@@ -9,6 +9,41 @@
     $usql = "SELECT fullname FROM register where email='$useremail';";
     $uresult = mysqli_query($conn, $usql);
     $urow = mysqli_fetch_assoc($uresult);
+
+
+    // Get user input
+    $user_lat = $_POST['latitude'];
+    $user_lng = $_POST['longitude'];
+    // $user_lat = 27.69224;
+    // $user_lng = 85.23403;
+    $speciality = $_POST['speciality'];
+    $radius = $_POST['radius']; // in kilometers
+
+    // Prepare SQL with Haversine
+    $sql = "
+        SELECT 
+            id,
+            fname,
+            sid,
+            latitude,
+            longitude,
+            (
+                6371 * ACOS(
+                    COS(RADIANS(?)) * COS(RADIANS(latitude)) *
+                    COS(RADIANS(longitude) - RADIANS(?)) +
+                    SIN(RADIANS(?)) * SIN(RADIANS(latitude))
+                )
+            ) AS distance
+        FROM doctor
+        WHERE sid = ?
+        HAVING distance <= ?
+        ORDER BY distance ASC
+    ";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ddssd", $user_lat, $user_lng, $user_lat, $speciality, $radius);
+    $stmt->execute();
+    $result = $stmt->get_result();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,8 +63,9 @@
             background-color: #fdfdfd;
         }
 
-        .search-doctor div {
-            margin-bottom: 10px;
+        .search-doctor div{
+            width: 100%;
+            gap: 20%;
         }
 
         .search-doctor label,
@@ -50,10 +86,11 @@
             margin-top: 5px;
         }
 
-        .search-doctor select{
+        .search-doctor .select{
             display: flex;
             flex-wrap: wrap;
-            /* gap: 20px; */
+            gap: 20px;
+            align-items: baseline;
         }
 
         .search-doctor button {
@@ -63,7 +100,6 @@
             border: none;
             border-radius: 6px;
             cursor: pointer;
-            margin-top: 10px;
         }
 
         .search-doctor button:hover {
@@ -73,6 +109,11 @@
         .search-doctor span {
             color: red;
             font-size: 10px;
+        }
+
+        .sub-btn{
+            display: block;
+            margin: 2px auto;
         }
 
         @media screen and (max-width: 480px) {
@@ -85,7 +126,6 @@
                 font-size: 14px;
             }
         }
-
     </style>
 </head>
 <body>
@@ -122,52 +162,59 @@
             </div>
                 
             <div class="search-doctor">
-                <div>
-                    <button id="getLocation">Get My Location</button>
-                        <label for="">
-                            latitude:
-                            <input type="text" placeholder="Latitude" id="lat" readonly />
-                            
-                        </label>
-                        <label for="">
-                        Longitude:
-                        <input type="text" placeholder="Longitude" id="long" readonly />
-                        </label>
-                        <script src="../assets/geolocation.js"></script>
-                </div>
-
-                <div class="select">
-                    Choose Speciality:
-                    <select name="speciality" id="speciality">
-                            <option value="">Select Speciality</option>
-                            <?php
-                                $ssql = "SELECT id, title FROM specialities";
-
-                                $s_result = mysqli_query($conn, $ssql);
-
-                                while($row  = mysqli_fetch_assoc($s_result)){
-                                    echo "<option value='" . $row['id'] . "'>" . $row['title']  . "</option>";
-                                }
-                            ?>
-                    </select>
-                    <span><?php echo isset($err['speciality'])? $err['speciality']: ''; ?></span>
-
-                    Radius:
-                    <select name="radius" id="radius">
-                            <option value="">Select Radius</option>
-                            <option value="5">5 km</option>
-                            <option value="10">10 km</option>
-                            <option value="15">15 km</option>
-                            <option value="20">20 km</option>
-                            <option value="25">25 km</option>
-                    </select>
-                    <span><?php echo isset($err['radius'])? $err['radius']: ''; ?></span>
-                </div>
                 
+                <div>
+                    <button id="getLocation" class="get-btn">My Location</button>
+                    <script src="../assets/geolocation.js"></script>
+                </div><br>
 
-                <div class="button">
-                    <button type="submit" class="btn">Search</button>
-                </div>
+                <form action="find_nearby_doctors.php" method="POST" class="select">
+                        <div>
+                            <label for="">
+                                Latitude:
+                                <input type="text" placeholder="Latitude" id="lat" name="latitude" readonly />
+                            </label>
+                                
+                            <label for="">
+                                Longitude:
+                                <input type="text" placeholder="Longitude" id="long" name="longitude" readonly />
+                            </label>
+                        </div>
+
+                    <div>
+                        Choose Speciality:
+                        <select name="speciality" id="speciality">
+                                <option value="">Select Speciality</option>
+                                <?php
+                                    $ssql = "SELECT id, title FROM specialities";
+
+                                    $s_result = mysqli_query($conn, $ssql);
+
+                                    while($row  = mysqli_fetch_assoc($s_result)){
+                                        echo "<option value='" . $row['id'] . "'>" . $row['title']  . "</option>";
+                                    }
+                                ?>
+                        </select>
+                        <span><?php echo isset($err['speciality'])? $err['speciality']: ''; ?></span>
+
+
+                        Radius:
+                        <select name="radius" id="radius">
+                                <option value="">Select Radius</option>
+                                <option value="5">5 km</option>
+                                <option value="10">10 km</option>
+                                <option value="15">15 km</option>
+                                <option value="20">20 km</option>
+                                <option value="25">25 km</option>
+                        </select>
+                        <span><?php echo isset($err['radius'])? $err['radius']: ''; ?></span>
+                    </div>
+
+                    <div>
+                        <button type="submit" class="sub-btn">Search</button>
+                    </div>
+                </form>
+
             </div><br>
 
             <div class="sessions">

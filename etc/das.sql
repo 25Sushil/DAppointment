@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 25, 2025 at 11:53 AM
+-- Generation Time: Apr 30, 2025 at 06:23 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -77,8 +77,8 @@ INSERT INTO `appointment` (`id`, `fullname`, `email`, `phone`, `bg`, `address`, 
 CREATE TABLE `doctor` (
   `id` int(11) NOT NULL,
   `fname` varchar(60) NOT NULL,
-  `latitude` double NOT NULL,
-  `longitude` double NOT NULL,
+  `latitude` decimal(10,8) NOT NULL,
+  `longitude` decimal(11,8) NOT NULL,
   `email` varchar(60) NOT NULL,
   `password` varchar(60) NOT NULL,
   `phone` varchar(60) NOT NULL,
@@ -94,11 +94,11 @@ CREATE TABLE `doctor` (
 --
 
 INSERT INTO `doctor` (`id`, `fname`, `latitude`, `longitude`, `email`, `password`, `phone`, `address`, `image_name`, `image_path`, `sid`, `created_at`) VALUES
-(52, 'DR. Suresh Lamichhane', 27.68995, 85.31897, 'suresh11@gmail.com', '7054f8848d94a0d18b989fcb60d8dcd9cc934cdd', '9805879212', 'Norvic Hospital', 'doctor5.jpg', 'uploads/doctor5.jpg', 20, '2024-06-18 04:06:16'),
-(64, 'Dr. Manu Basnet', 27.68995, 85.31897, 'manu11@gmial.com', '19c44c62d4489e099eaf5adc0420377d521cb26e', '9836251478', 'Norvic Hospital', 'manu.png', 'uploads/manu.png', 26, '2024-06-19 06:26:57'),
-(69, 'Dr. Kamal Lamsal', 274118.6, 851958.44, 'kamal11@gmail.com', '59b8ed7862e8255a370de15e6924afdd3fc584e0', '9895265262', '', 'image.jpg', 'uploads/image.jpg', 24, '2025-04-22 08:24:47'),
-(71, 'Dr. Banira Karki', 27.68995, 85.31897, 'banira11@gmail.com', '8cc1502ba48f5ac4cbc33078e7b2b4046c49c4f6', '9825151685', 'Norvic Hospital	', 'banira.jpg', 'uploads/banira.jpg', 34, '2025-04-22 09:27:08'),
-(97, 'Dr. Sudip Parajuli', 274118.6, 851958.44, 'sudip11@gmail.com', '64934d24ba72a391868f5c5eda33ee65fe53073f', '9814745214', '', 'sudip.jpg', 'uploads/sudip.jpg', 15, '2025-04-22 11:01:35');
+(52, 'DR. Suresh Lamichhane', 27.69249318, 85.31905910, 'suresh11@gmail.com', '7054f8848d94a0d18b989fcb60d8dcd9cc934cdd', '9805879212', 'Norvic Hospital', 'doctor5.jpg', 'uploads/doctor5.jpg', 20, '2024-06-18 04:06:16'),
+(64, 'Dr. Manu Basnet', 27.68999660, 85.31892853, 'manu11@gmial.com', '19c44c62d4489e099eaf5adc0420377d521cb26e', '9836251478', 'Norvic Hospital', 'manu.png', 'uploads/manu.png', 26, '2024-06-19 06:26:57'),
+(69, 'Dr. Kamal Lamsal', 99.99999999, 999.99999900, 'kamal11@gmail.com', '59b8ed7862e8255a370de15e6924afdd3fc584e0', '9895265262', '', 'image.jpg', 'uploads/image.jpg', 24, '2025-04-22 08:24:47'),
+(71, 'Dr. Banira Karki', 28.00000000, 85.00000000, 'banira11@gmail.com', '8cc1502ba48f5ac4cbc33078e7b2b4046c49c4f6', '9825151685', 'Norvic Hospital	', 'banira.jpg', 'uploads/banira.jpg', 34, '2025-04-22 09:27:08'),
+(97, 'Dr. Sudip Parajuli', 99.99999999, 999.99999900, 'sudip11@gmail.com', '64934d24ba72a391868f5c5eda33ee65fe53073f', '9814745214', '', 'sudip.jpg', 'uploads/sudip.jpg', 15, '2025-04-22 11:01:35');
 
 -- --------------------------------------------------------
 
@@ -275,7 +275,7 @@ ALTER TABLE `appointment`
 -- AUTO_INCREMENT for table `doctor`
 --
 ALTER TABLE `doctor`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
 
 --
 -- AUTO_INCREMENT for table `patient`
