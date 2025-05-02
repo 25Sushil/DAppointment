@@ -36,6 +36,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update</title>
+    <link rel="icon" type="image" href="../../assets/img/doctorslogo.jpg">
     <link rel="stylesheet" href="../../assets/dash1.css">
     <link rel="stylesheet" href="../../assets/appoint.css">
 </head>
