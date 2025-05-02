@@ -262,10 +262,10 @@
                 <?php
                 }
                     } else {
-                        echo "<p>No doctors found within {$radius} km.</p>";
+                        // echo "<p>No doctors found within {$radius} km.</p>";
                     }
-                    $stmt->close();
-                    $conn->close();
+                    // $stmt->close();
+                    // $conn->close();
             ?>
             </div>
             

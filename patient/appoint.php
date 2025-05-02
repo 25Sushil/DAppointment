@@ -139,10 +139,10 @@
                     <div class="card">
                         <div class="title">
                             <div class="content">
+                                <p>Appoint No: <?php echo $row['id']; ?> </p><br>
                                 <p>Doctor name: <?php echo $row['fname']; ?></p><br>
                                 <p>Patient name: <b><?php echo $row['fullname']; ?></p><br></b>
                                 <p>Speciality: <?php echo $row['title'];?></p><br>
-                                <p>Appoint No: <?php echo $row['id']; ?> </p><br>
                                 <p>Date: <?php echo $row['date']; ?></p><br>
                                 <p>Time: <?php echo $row['time']; ?></p><br>
                                 <!-- <p>Status: <?php echo ($row['status'] == 1) ? "Approved" : (($row['status'] == 1) ? "Checked" : "Pending");?></p><br> -->
