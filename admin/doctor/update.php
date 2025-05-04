@@ -10,7 +10,7 @@
     $id = $_GET['updateid'];
     $sql = "SELECT * FROM `doctor` where id=$id";
     $result = mysqli_query($conn, $sql);
-    
+
     $row = mysqli_fetch_assoc($result);
     $fname = $row['fname'];
     $phone = $row['phone'];
@@ -19,30 +19,44 @@
     $longitude = $row['longitude'];
     $address = $row['address'];
     $speciality = $row['sid'];
-    $image = $row['image_name'];
+    // $image = $row['image_name'];
     // $password = $row['password'];
 
     if(isset($_POST['submit'])){
+
+        if(empty($_FILES['image'])){
+            $err['image'] = "insert image";
+            $error ++;
+        }elseif($_FILES['image']['size'] == 0){
+            $err['image'] = "file is empty";
+            $error ++;
+        }else{
+            $image = $_FILES['image'];
+        }
+
+
         $fname = $_POST['fname'];
         $latitude = $_POST['latitude'];
         $longitude = $_POST['longitude'];
         $email = $_POST['email'];
+        $speciality = $_POST['speciality'];
         $phone = $_POST['phone'];
         $address = $_POST['address'];
 
         $image = $_FILES['image'];
         $name = $image['name'];
         $image_tmp = $image['tmp_name'];
-        $upload_dir = 'admin/uploads/';
+        $upload_dir = 'uploads/';
         $path = $upload_dir. $name;
         move_uploaded_file($image_tmp, $path);
-        
+
         $password = sha1($_POST['password']);
 
-        $sql = "UPDATE `doctor` SET id=$id, fname='$fname', latitude='$latitude', longitude ='$longitude', email='$email', password='$password', phone='$phone', address='$address', image_name='$name', image_path='$path' where id=$id";
+        $sql = "UPDATE `doctor` SET id=$id, fname='$fname', latitude='$latitude', longitude ='$longitude', email='$email', password='$password', phone='$phone', address='$address', image_name='$name', image_path='$path', sid='$speciality' where id=$id";
         $result = mysqli_query($conn, $sql);
 
         if($result){
+            // echo $sql;
             header ('location: ../../admin/doctor.php');
         }else{
             die(mysqli_error($conn));
@@ -85,7 +99,7 @@
         <div class="main">
             <h2>Update</h2>
             <div class="container">
-                <form action="#" name="update" method="post">
+                <form action="#" name="update" method="POST" enctype="multipart/form-data">
 
                     <div class="input-group">
                         <label for="name">Name:</label><br>
@@ -163,7 +177,6 @@
                     </div>
                 </form>
             </div>
-
         </div>
     </section>
 

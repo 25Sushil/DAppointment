@@ -101,7 +101,7 @@
                 </ul>
             </div>
         </div>
-        <div class="main">     
+        <div class="main">
             <h2>Update</h2><br>
             <div class="container">
                 <form action="" name="update" method="post" enctype="multipart/form-data">

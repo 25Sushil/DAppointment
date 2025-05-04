@@ -76,25 +76,25 @@
                 </ul>
             </div>
         </div>
-        <div class="main">     
+        <div class="main">
             <h2 style="color:  black;">Update</h2>
             <div class="container">
-                <form action="" name="update" method="post">
+                <form action="" name="update" method="POST" enctype="multipart/form-data">
                 
                 <div class="input-group">
                         <input type="text" id="fullname" name="fullname" placeholder="Enter Your Full Name" value="<?php echo isset($fullname) ? $fullname : ''; ?>">
                         <span><?php echo isset($err['fullname'])? $err['fullname']: ''; ?></span>
-                    </div> 
+                    </div>
         
                     <div class="input-group">
                         <input type="email" name="email" id="email" placeholder="Email Address" value="<?php echo isset($email) ? $email : ''; ?>">
                         <span><?php echo isset($err['email'])? $err['email']: ''; ?></span>
-                    </div> 
+                    </div>
         
                     <div class="input-group">
                         <input type="text" name= "address" id="address" placeholder="Enter Your address" value="<?php echo isset($address) ? $address : ''; ?>">
                         <span><?php echo isset($err['address'])? $err['address']: ''; ?></span>
-                    </div> 
+                    </div>
         
                     <div class="input-group">
                         <select name="bg" id="bg">
@@ -108,7 +108,7 @@
                             <option value="B+">B+</option>
                             <option value="B-">B-</option>
                         </select>
-                    </div> 
+                    </div>
         
                     <div class="input-group">
                         <select name="speciality" id="speciality">
@@ -138,7 +138,7 @@
                                     }
                                 ?>
                         </select>
-                    </div>      
+                    </div>
         
                     <div class="input-group one-third">
                         <input type="tel" id="tel" name="tel" placeholder="Phone Number" value="<?php echo isset($tel) ? $tel : ''; ?>">

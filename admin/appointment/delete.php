@@ -5,7 +5,7 @@
     if(isset($_GET['deleteid'])){
         $id = $_GET['deleteid'];
 
-        $sql = "DELETE FROM `appointment` WHERE id=$id"; 
+        $sql = "DELETE FROM `appointment` WHERE id=$id";
         $result = mysqli_query($conn, $sql);
         if($result){
             header ('location: ../../admin/appoint.php');
