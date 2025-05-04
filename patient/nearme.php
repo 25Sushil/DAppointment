@@ -161,6 +161,8 @@
                 </div>
             </div>
                 
+
+            <!-- search session -->
             <div class="search-doctor">
                 
                 <!-- <div>
@@ -217,6 +219,7 @@
 
             </div><br>
 
+            <!-- search results -->
             <div class="sessions">
                 <div>
                 <h2>Doctor's Near You</h2><br>
@@ -224,8 +227,9 @@
 
                 <div class="cards">
                     <?php
-                        if ($result->num_rows > 0) {
-                            while ($row = $result->fetch_assoc()) {
+                        if ($_SERVER['REQUEST_METHOD'] === 'POST') { // Check if form is submitted
+                            if ($result->num_rows > 0) {
+                                while ($row = $result->fetch_assoc()) {
                     ?>
                     <div class="card">
                         <div class="title">
@@ -254,22 +258,23 @@
                                     $addr_row = $addr_result->fetch_assoc();
                                     echo $addr_row['address'] ?></p><br>
                         </div>
-                            
                         <div class="actions">
                                 <button class="book" type="submit"><a href="../patient/form.php">Appoint Now</a></button>
                         </div>
                     </div>
                 </div>
                 <?php
-                }
-                    } else {
-                        // echo "<p>No doctors found within {$radius} km.</p>";
+                    } 
+                } else {
+                    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                        echo "<p>No doctors found within {$radius} km.</p>";
                     }
-                    // $stmt->close();
-                    // $conn->close();
+                }
+            }
+                $stmt->close();
+                $conn->close();
             ?>
             </div>
-            
         </div>
     </section>
 
