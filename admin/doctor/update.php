@@ -33,7 +33,7 @@
         $image = $_FILES['image'];
         $name = $image['name'];
         $image_tmp = $image['tmp_name'];
-        $upload_dir = 'uploads/';
+        $upload_dir = 'admin/uploads/';
         $path = $upload_dir. $name;
         move_uploaded_file($image_tmp, $path);
         
