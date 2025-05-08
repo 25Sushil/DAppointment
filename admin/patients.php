@@ -4,9 +4,9 @@
 
     $keyword = isset($_GET['keyword'])  ? $_GET['keyword'] : NULL ; //ternary operator
     if(isset($keyword)){
-        $sql = "SELECT pa.id, pa.aid, ap.fullname, sp.title, doc.fname from patient as pa INNER JOIN appointment as ap ON pa.aid = ap.id INNER JOIN specialities as sp ON pa.sid = sp.id INNER JOIN doctor as doc ON pa.did = doc.id where fullname like '%$keyword%'";
+        $sql = "SELECT pa.id, pa.aid, ap.status, ap.fullname, sp.title, doc.fname from patient as pa INNER JOIN appointment as ap ON pa.aid = ap.id INNER JOIN specialities as sp ON pa.sid = sp.id INNER JOIN doctor as doc ON pa.did = doc.id where fullname like '%$keyword%'";
     }else{
-        $sql = "SELECT pa.id, pa.aid, ap.fullname, sp.title, doc.fname from patient as pa INNER JOIN appointment as ap ON pa.aid = ap.id INNER JOIN specialities as sp ON pa.sid = sp.id INNER JOIN doctor as doc ON pa.did = doc.id";
+        $sql = "SELECT pa.id, pa.aid, ap.status, ap.fullname, sp.title, doc.fname from patient as pa INNER JOIN appointment as ap ON pa.aid = ap.id INNER JOIN specialities as sp ON pa.sid = sp.id INNER JOIN doctor as doc ON pa.did = doc.id";
     }
     $result = mysqli_query($conn, $sql);
     
@@ -154,7 +154,8 @@
                                 <td class="event">
                                     <button><a href="../admin/patient/update.php?updateid=<?php echo $row['id']; ?>"><svg class="icon icon-pencil"><use xlink:href="#icon-pencil"></use></svg></a></button>
                                     <button><a href="../admin/patient/delete.php?deleteid=<?php echo $row['id']; ?>"><svg class="icon icon-trash"><use xlink:href="#icon-trash"></use></svg></a></button>
-                                    <button><a href="../admin/patient/complete.php?completeid=<?php echo $row['aid']; ?>"><svg class="icon icon-checkmark"><use xlink:href="#icon-checkmark"></use></svg></a></button>
+                                    <button><a <?php $class = ($row['status'] == 1 || $row['status'] == 2) ? 'class="disabled"' : ''; echo ($row['status'] == 1) ? 'class="disabled" onclick="return false"' : (($row['status'] == 2) ? 'class="disabled" onclick="return false";' : ' onclick="return true";') ;?>><a 
+                                        style="<?php echo ($row['status'] == 1) ? 'color: green;' : (($row['status'] == 2) ? 'color: gray;' : 'color: green;') ;?>" href="../admin/patient/complete.php?completeid=<?php echo $row['aid']; ?>"><svg class="icon icon-checkmark"><use xlink:href="#icon-checkmark"></use></svg></a></button>
                                 </td>
                         </tr>
                             <?php   

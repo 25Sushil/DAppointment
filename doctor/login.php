@@ -86,6 +86,10 @@
                 <button type="submit" name="submit" value="login">Log In</button>
             </div>
 
+            <div class="option">
+                <p>Don't have an account? <a href="create-account.php">Create New</a></p>
+            </div>
+
         </form>
     </div>  
     <script src="../assets/login.js"></script>  

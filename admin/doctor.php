@@ -153,7 +153,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <?php 
+                                <?php
                                     while($row = mysqli_fetch_assoc($result)){
                                 ?>
                                     <td><?php echo $row['id'] ?></td>

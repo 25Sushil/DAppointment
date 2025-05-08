@@ -8,107 +8,16 @@
     $uresult = mysqli_query($conn, $usql);
     $urow = mysqli_fetch_assoc($uresult);
 
-    $error = 0;
-    $err = [];
+    // $sql = "select * from new_doctor;";
 
-    if(isset($_POST['submit'])){
-        if(empty($_POST['fname'])){
-            $err['fname'] = "enter full name";
-
-            $error ++;
-        }else{
-            $fname = $_POST['fname'];
-        }
-
-        if(empty($_POST['latitude'])){
-            $err['latitude'] = "enter latitude";
-            $error ++;
-        }else{
-            $latitude = $_POST['latitude'];
-        }
-
-        if(empty($_POST['longitude'])){
-            $err['longitude'] = "enter longitude";
-            $error ++;
-        }else{
-            $longitude = $_POST['longitude'];
-        }
-
-        if(empty($_POST['email'])){
-            $err['email'] = "enter email";
-            $error ++;
-        }else{
-            $email = $_POST['email'];
-        }
-
-        if(empty($_POST['phone'])){
-            $err['phone'] = "enter phone number";
-            $error ++;
-        }else{
-            $phone = $_POST['phone'];
-        }
-
-        if(empty($_POST['address'])){
-            $err['address'] = "enter address";
-            $error ++;
-        }else{
-            $address = $_POST['address'];
-        }
-
-        if(empty($_POST['speciality'])){
-            $err['speciality'] = "select speciality";
-            $error ++;
-        }else{
-            $speciality = $_POST['speciality'];
-        }
-
-        if(empty($_FILES['image'])){
-            $err['image'] = "insert image";
-            $error ++;
-        }elseif($_FILES['image']['size'] == 0){
-            $err['image'] = "file is empty";
-            $error ++;
-        }else{
-            $image = $_FILES['image'];
-        }
-
-        if(empty($_POST['password'])){
-            $err['password'] = "enter password";
-            $error ++;
-        }else{
-            $password = $_POST['password'];
-        }
-
-        if($error == 0){
-            $fname = $_POST['fname'];
-            $latitude = $_POST['latitude'];
-            $longitude = $_POST['longitude'];
-            $email = $_POST['email'];
-            $speciality = $_POST['speciality'];
-            $phone = $_POST['phone'];
-            $address = $_POST['address'];
-
-            $image = $_FILES['image'];
-            $name = $image['name'];
-            $image_tmp = $image['tmp_name'];
-            $upload_dir = 'uploads/';
-            $path = $upload_dir. $name;
-            move_uploaded_file($image_tmp, $path);
-
-            $password = sha1($_POST['password']);
-
-            $sql = "INSERT INTO `doctor` (`fname`, `latitude`, `longitude`, `email`, `password`, `phone`, `address`, `image_name`, `image_path`, `sid`) VALUES ('$fname','$latitude', '$longitude', '$email', '$password','$phone', '$address', '$name', '$path', '$speciality');";
-
-            $result = mysqli_query($conn, $sql);
-            if($result){
-                echo 'Inserted Successfully';
-                // header('location: ../admin/doctor.php');
-            }else{
-                // echo 'Cannot Inserted';
-                echo $query;
-            }
-        }
+    $keyword = isset($_GET['keyword'])  ? $_GET['keyword'] : NULL ; //ternary operator
+    if(isset($keyword)){
+        $sql = "SELECT doc.id, doc.fname, doc.longitude, doc.latitude, doc.address, doc.email, doc.phone, doc.image_path, doc.status, sp.title from new_doctor as doc INNER JOIN specialities as sp ON doc.sid = sp.id where fname like '%$keyword%'";
+    }else{
+        // $sql = "SELECT * from doctor";
+        $sql = "SELECT doc.id, doc.fname, doc.longitude, doc.latitude, doc.address, doc.email, doc.phone, doc.image_path, doc.status, sp.title from new_doctor as doc INNER JOIN specialities as sp ON doc.sid = sp.id";
     }
+    $result = mysqli_query($conn, $sql);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -117,7 +26,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Doctors</title>
     <link rel="icon" type="image" href="../assets/img/doctorslogo.jpg">
-    <link rel="stylesheet" href="../assets/doctors.css">
+    <!-- <link rel="stylesheet" href="../assets/doctors.css"> -->
     <link rel="stylesheet" href="../assets/dash1.css">
 </head>
 <body>
@@ -145,88 +54,131 @@
             </div>
         </div>
 
-        <div class="main">
-            <h2>Add New Doctor</h2>
-            <div class="container">
-                <form action="#" name="register" method="post" enctype="multipart/form-data">
-                    <div class="input-group">
-                        <label for="name">Name:</label><br>
-                        <input type="text" id="fname" name="fname" placeholder="Doctor Name" value="<?php echo isset($fname) ? $fname : ''; ?>">
-                        <span><?php echo isset($err['fname'])? $err['fname']: '' ?></span>
-                    </div><br>
-                    
-                    <div class="input-group">
-                        <label for="latitude">Latitude:</label><br>
-                        <input type="text" id="latitude" name="latitude" placeholder="latitude" value="<?php echo isset($latitude) ? $latitude : ''; ?>">
-                        <span><?php echo isset($err['latitude'])? $err['latitude']: '' ?></span>
-                    </div><br>
 
-                    <div class="input-group">
-                        <label for="longitude">Longitude:</label><br>
-                        <input type="text" id="longitude" name="longitude" placeholder="longitude" value="<?php echo isset($longitude) ? $longitude : ''; ?>">
-                        <span><?php echo isset($err['longitude'])? $err['longitude']: '' ?></span>
-                    </div><br>
+        <section class="main">
+            <div class="head">
+                <form action="#" method="get" class="search-bar">
+                    <input type="text" name="keyword" placeholder="Search..">
+                    <button type="submit" class="search"><svg class="icon icon-search"><use xlink:href="#icon-search"></use></svg></button>
+                </form>
+                <div class="date-container">
+                    <h1>Today's Date</h1>
+                    <p id="date"></p>
+                </div>
+            </div>
+                
+            <div class="status">
+                <div class="status-bar">
+                    <h2>Status</h2>
+                </div>
+                <div class="dash-collection">
+                    <div class="doc">
+                        <?php
+                            $dsql = "SELECT * FROM doctor";
+                            $dresult = mysqli_query($conn, $dsql);
 
-                    <div class="input-group">
-                        <label for="email">Email:</label><br>
-                        <input type="text" id="email" name="email" placeholder="Email Address" value="<?php echo isset($email) ? $email : ''; ?>">
-                        <span><?php echo isset($err['email'])? $err['email']: '' ?></span>
-                    </div><br>
-
-                    <div class="input-group">
-                        <label for="phone">Phone:</label><br>
-                        <input type="tel" id="phone" name="phone" placeholder="Phone Number" value="<?php echo isset($phone) ? $phone : ''; ?>">
-                        <span><?php echo isset($err['phone'])? $err['phone']: '' ?></span>
-                    </div><br>
-
-                    <div class="input-group">
-                        <label for="address">Address:</label><br>
-                        <input type="text" id="address" name="address" placeholder="Address" value="<?php echo isset($address) ? $address : ''; ?>">
-                        <span><?php echo isset($err['address'])? $err['address']: '' ?></span>
-                    </div><br>
-
-                    <div class="input-group">
-                        <label for="speciality">Select Specilities:</label><br>
-                        <select name="speciality" id="speciality">
-                            <option value="">Select Speciality</option>
-                                <?php
-                                    $ssql = "SELECT id, title FROM specialities";
-
-                                    $s_result = mysqli_query($conn, $ssql);
-
-                                    while($row  = mysqli_fetch_assoc($s_result)){
-                                        echo "<option value='" . $row['id'] . "'>" . $row['title']  . "</option>";
-                                    }
-                                ?>
-                        </select>
-                        <span><?php echo isset($err['speciality'])? $err['speciality']: '' ?></span>
-                    </div><br>
-
-                    <div class="input-group">
-                        <label for="file">Choose file:</label><br>
-                        <input type="file" id="image" name="image" accept=".jpg, .png, .svg" value="<?php echo isset($image) ? $image : ''; ?>">
-                        <span><?php echo isset($err['image'])? $err['image']: '' ?></span>
-                    </div><br>
-
-                    <div class="input-group">
-                        <label for="password">Password:</label><br>
-                        <input type="password" id="password" name="password" placeholder="Password" value="<?php echo isset($password) ? $password : ''; ?>">
-                        <span><?php echo isset($err['password'])? $err['password']: '' ?></span>
-                    </div><br>
-
-                    <div class="input-group">
-                        <label for="cpassword">Confirm Password:</label><br>
-                        <input type="password" id="cpassword" name="cpassword" placeholder="Re-type Password" value="<?php echo isset($cpassword) ? $cpassword : ''; ?>">
-                        <span><?php echo isset($err['password'])? $err['password']: '' ?></span>
+                            if($drow = mysqli_num_rows($dresult)){
+                                echo '<h3>'.$drow.'</h3>';
+                            }else{
+                                echo '<h3>0</h3>';
+                            }
+                        ?>
+                        <svg class="icon icon-medical_services"><use xlink:href="#icon-medical_services"></use></svg><br>
+                        <h4>Doctor's</h4><br>
                     </div>
             
-                    <div class="buttons">
-                        <button type="reset">Reset</button>
-                        <button type="submit" name="submit" value="register">Add Doctor</button>
+                    <div class="doc">
+                        <?php
+                            $psql = "SELECT * FROM patient";
+                            $presult = mysqli_query($conn, $psql);
+
+                            if($prow = mysqli_num_rows($presult)){
+                                echo '<h3>'.$prow.'</h3>';
+                            }else{
+                                echo '<h3>0</h3>';
+                            }
+                        ?>
+                        <svg class="icon icon-accessible_forward"><use xlink:href="#icon-accessible_forward"></use></svg><br>
+                        <h4>Patient's</h4><br>
                     </div>
-                </form>
+            
+                    <div class="doc">
+                        <?php
+                            $asql = "SELECT * FROM appointment";
+                            $aresult = mysqli_query($conn, $asql);
+
+                            if($arow = mysqli_num_rows($aresult)){
+                                echo '<h3>'.$arow.'</h3>';
+                            }else{
+                                echo '<h3>0</h3>';
+                            }
+                        ?>
+                        <svg class="icon icon-bookmark_outline"><use xlink:href="#icon-bookmark_outline"></use></svg><br>
+                        <h4>Appointment's</h4><br>
+                    </div>
+            
+                    <div class="doc">
+                        <?php
+                            $ssql = "SELECT * FROM schedule";
+                            $sresult = mysqli_query($conn, $ssql);
+
+                            if($srow = mysqli_num_rows($sresult)){
+                                echo '<h3>'.$srow.'</h3>';
+                            }else{
+                                echo '<h3>0</h3>';
+                            }
+                        ?>
+                        <svg class="icon icon-activity"><use xlink:href="#icon-activity"></use></svg><br>
+                        <h4>Schedule's</h4><br>
+                    </div>
+                </div>
+            </div><br>
+
+            <div class="tabular">
+                <h2>Doctor's Detail's</h2><br>
+                <table class="table-container">
+                    <thead>
+                        <tr>
+                            <th>Doctor's Name</th>
+                            <th>Latitude</th>
+                            <th>Longitude</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Address</th>
+                            <th>Speciality</th>
+                            <th>image</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <?php
+                                while($row = mysqli_fetch_assoc($result)){
+                                    
+                            ?>
+                                <td><?php echo $row['fname'] ?></td>
+                                <td><?php echo $row['latitude']; ?></td>
+                                <td><?php echo $row['longitude']; ?></td>
+                                <td><?php echo $row['email'] ?></td>
+                                <td><?php echo $row['phone'] ?></td>
+                                <td><?php echo $row['address'] ?></td>
+                                <td><?php echo $row['title'] ?></td>
+                                <td><?php echo $row['image_path'] ?></td>
+                                <td class="event">
+                                    <button
+                                        <?php $class = ($row['status'] == 1 || $row['status'] == 2) ? 'class="disabled"' : ''; echo ($row['status'] == 1) ? 'class="disabled" onclick="return false"' : (($row['status'] == 2) ? 'class="disabled" onclick="return false";' : ' onclick="return true";') ;?>><a 
+                                        style="<?php echo ($row['status'] == 1) ? 'color: gray;' : (($row['status'] == 2) ? 'color: gray;' : 'color: green;') ;?>" href="../admin/doctor/approve.php?approvedid=<?php echo $row['id']; ?>"><svg class="icon icon-check-circle"><use xlink:href="#icon-check-circle" ></use></svg></a></button>
+                                    <button><a href="../admin/doctor/new_doctor_delete.php?deletedid=<?php echo $row['id']; ?>"><svg class="icon icon-trash"><use xlink:href="#icon-trash"></use></svg></a></button>
+                                </td>
+                        </tr>
+                            <?php
+                                }
+                            ?>
+                    </tbody>
+                </table>
             </div>
-        </div>
+        </section>
     </section>
 
     <!-- <script src="../assets/adddoctors.js"></script> -->
@@ -266,11 +218,17 @@
             <symbol id="icon-eye" viewBox="0 0 24 24">
                 <path d="M0.106 11.553c-0.136 0.274-0.146 0.603 0 0.894 0 0 0.396 0.789 1.12 1.843 0.451 0.656 1.038 1.432 1.757 2.218 0.894 0.979 2.004 1.987 3.319 2.8 1.595 0.986 3.506 1.692 5.698 1.692s4.103-0.706 5.698-1.692c1.315-0.813 2.425-1.821 3.319-2.8 0.718-0.786 1.306-1.562 1.757-2.218 0.724-1.054 1.12-1.843 1.12-1.843 0.136-0.274 0.146-0.603 0-0.894 0 0-0.396-0.789-1.12-1.843-0.451-0.656-1.038-1.432-1.757-2.218-0.894-0.979-2.004-1.987-3.319-2.8-1.595-0.986-3.506-1.692-5.698-1.692s-4.103 0.706-5.698 1.692c-1.315 0.813-2.425 1.821-3.319 2.8-0.719 0.786-1.306 1.561-1.757 2.218-0.724 1.054-1.12 1.843-1.12 1.843zM2.14 12c0.163-0.281 0.407-0.681 0.734-1.158 0.41-0.596 0.94-1.296 1.585-2.001 0.805-0.881 1.775-1.756 2.894-2.448 1.35-0.834 2.901-1.393 4.647-1.393s3.297 0.559 4.646 1.393c1.119 0.692 2.089 1.567 2.894 2.448 0.644 0.705 1.175 1.405 1.585 2.001 0.328 0.477 0.572 0.876 0.734 1.158-0.163 0.281-0.407 0.681-0.734 1.158-0.41 0.596-0.94 1.296-1.585 2.001-0.805 0.881-1.775 1.756-2.894 2.448-1.349 0.834-2.9 1.393-4.646 1.393s-3.297-0.559-4.646-1.393c-1.119-0.692-2.089-1.567-2.894-2.448-0.644-0.705-1.175-1.405-1.585-2.001-0.328-0.477-0.572-0.877-0.735-1.158zM16 12c0-1.104-0.449-2.106-1.172-2.828s-1.724-1.172-2.828-1.172-2.106 0.449-2.828 1.172-1.172 1.724-1.172 2.828 0.449 2.106 1.172 2.828 1.724 1.172 2.828 1.172 2.106-0.449 2.828-1.172 1.172-1.724 1.172-2.828zM14 12c0 0.553-0.223 1.051-0.586 1.414s-0.861 0.586-1.414 0.586-1.051-0.223-1.414-0.586-0.586-0.861-0.586-1.414 0.223-1.051 0.586-1.414 0.861-0.586 1.414-0.586 1.051 0.223 1.414 0.586 0.586 0.861 0.586 1.414z"></path>
             </symbol>
+            <symbol id="icon-check-circle" viewBox="0 0 24 24">
+                <path d="M21 11.080v0.92c-0.001 2.485-1.009 4.733-2.64 6.362s-3.88 2.634-6.365 2.632-4.734-1.009-6.362-2.64-2.634-3.879-2.633-6.365 1.009-4.733 2.64-6.362 3.88-2.634 6.365-2.633c1.33 0.001 2.586 0.289 3.649 0.775 0.502 0.23 1.096 0.008 1.325-0.494s0.008-1.096-0.494-1.325c-1.327-0.606-2.866-0.955-4.479-0.956-3.037-0.002-5.789 1.229-7.78 3.217s-3.224 4.74-3.226 7.777 1.229 5.789 3.217 7.78 4.739 3.225 7.776 3.226 5.789-1.229 7.78-3.217 3.225-4.739 3.227-7.777v-0.92c0-0.552-0.448-1-1-1s-1 0.448-1 1zM21.293 3.293l-9.293 9.302-2.293-2.292c-0.391-0.391-1.024-0.391-1.414 0s-0.391 1.024 0 1.414l3 3c0.391 0.391 1.024 0.39 1.415 0l10-10.010c0.39-0.391 0.39-1.024-0.001-1.414s-1.024-0.39-1.414 0.001z"></path>
+            </symbol>
             <symbol id="icon-trash" viewBox="0 0 20 20">
                 <path d="M6 2l2-2h4l2 2h4v2h-16v-2h4zM3 6h14l-1 14h-12l-1-14zM8 8v10h1v-10h-1zM11 8v10h1v-10h-1z"></path>
             </symbol>
             <symbol id="icon-person_add_alt_1" viewBox="0 0 24 24">
                 <path d="M12.984 8.016q0-1.125-0.539-2.039t-1.43-1.453-2.016-0.539-2.016 0.539-1.43 1.453-0.539 2.039q0 1.078 0.539 1.992t1.43 1.453 2.016 0.539 2.016-0.539 1.43-1.453 0.539-1.992zM15 9.984v2.016h3v3h2.016v-3h3v-2.016h-3v-3h-2.016v3h-3zM0.984 18v2.016h16.031v-2.016q0-0.797-0.563-1.43t-1.477-1.125-1.992-0.797-2.133-0.469-1.852-0.164-1.852 0.164-2.133 0.469-1.992 0.797-1.477 1.125-0.563 1.43z"></path>
+            </symbol>
+            <symbol id="icon-search" viewBox="0 0 32 32">
+                <path d="M31.008 27.231l-7.58-6.447c-0.784-0.705-1.622-1.029-2.299-0.998 1.789-2.096 2.87-4.815 2.87-7.787 0-6.627-5.373-12-12-12s-12 5.373-12 12 5.373 12 12 12c2.972 0 5.691-1.081 7.787-2.87-0.031 0.677 0.293 1.515 0.998 2.299l6.447 7.58c1.104 1.226 2.907 1.33 4.007 0.23s0.997-2.903-0.23-4.007zM12 20c-4.418 0-8-3.582-8-8s3.582-8 8-8 8 3.582 8 8-3.582 8-8 8z"></path>
             </symbol>
             <symbol id="icon-user-plus" viewBox="0 0 24 24">
                 <path d="M17 21v-2c0-1.38-0.561-2.632-1.464-3.536s-2.156-1.464-3.536-1.464h-7c-1.38 0-2.632 0.561-3.536 1.464s-1.464 2.156-1.464 3.536v2c0 0.552 0.448 1 1 1s1-0.448 1-1v-2c0-0.829 0.335-1.577 0.879-2.121s1.292-0.879 2.121-0.879h7c0.829 0 1.577 0.335 2.121 0.879s0.879 1.292 0.879 2.121v2c0 0.552 0.448 1 1 1s1-0.448 1-1zM13.5 7c0-1.38-0.561-2.632-1.464-3.536s-2.156-1.464-3.536-1.464-2.632 0.561-3.536 1.464-1.464 2.156-1.464 3.536 0.561 2.632 1.464 3.536 2.156 1.464 3.536 1.464 2.632-0.561 3.536-1.464 1.464-2.156 1.464-3.536zM11.5 7c0 0.829-0.335 1.577-0.879 2.121s-1.292 0.879-2.121 0.879-1.577-0.335-2.121-0.879-0.879-1.292-0.879-2.121 0.335-1.577 0.879-2.121 1.292-0.879 2.121-0.879 1.577 0.335 2.121 0.879 0.879 1.292 0.879 2.121zM23 10h-2v-2c0-0.552-0.448-1-1-1s-1 0.448-1 1v2h-2c-0.552 0-1 0.448-1 1s0.448 1 1 1h2v2c0 0.552 0.448 1 1 1s1-0.448 1-1v-2h2c0.552 0 1-0.448 1-1s-0.448-1-1-1z"></path>
@@ -284,5 +242,8 @@
         </defs>
     </svg>
 
+    <script>
+        document.getElementById('date').innerText = new Date().toDateString();
+    </script>
 </body>
 </html>

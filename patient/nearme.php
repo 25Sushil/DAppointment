@@ -10,10 +10,10 @@
     $uresult = mysqli_query($conn, $usql);
     $urow = mysqli_fetch_assoc($uresult);
 
-    // $user_lat = isset($_POST['latitude']) ? $_POST['latitude'] : '';
-    // $user_lng = isset($_POST['longitude']) ? $_POST['longitude'] : '';
-    $user_lat = 27.69224;
-    $user_lng = 85.23403;
+    $user_lat = isset($_POST['latitude']) ? $_POST['latitude'] : '';
+    $user_lng = isset($_POST['longitude']) ? $_POST['longitude'] : '';
+    // $user_lat = 27.69224;
+    // $user_lng = 85.23403;
     $speciality = isset($_POST['speciality']) ? $_POST['speciality'] : '';
     $radius = isset($_POST['radius']) ? $_POST['radius'] : ''; // in kilometers
 
@@ -42,7 +42,6 @@
     $stmt->bind_param("ddssd", $user_lat, $user_lng, $user_lat, $speciality, $radius);
     $stmt->execute();
     $result = $stmt->get_result();
-        
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -165,23 +164,25 @@
             <!-- search session -->
             <div class="search-doctor">
                 
-                <!-- <div>
+                <div>
                     <button id="getLocation" class="get-btn">My Location</button>
                     <script src="../assets/geolocation.js"></script>
-                </div><br> -->
+                </div><br>
 
                 <form action="" method="POST" class="select">
-                        <!-- <div>
+                        <div>
                             <label for="">
                                 Latitude:
-                                <input type="text" placeholder="Latitude" id="lat" name="latitude" value="<?php echo isset($latitude) ? $latitude : ''; ?>" readonly />
+                                <input type="text" placeholder="Latitude" id="lat" name="latitude" value="<?php echo isset($latitude) ? $latitude : ''; ?>"/>
+                                <span><?php echo isset($err['latitude'])? $err['latitude']: ''; ?></span>
                             </label>
                                 
                             <label for="">
                                 Longitude:
-                                <input type="text" placeholder="Longitude" id="long" name="longitude" value="<?php echo isset($longitude) ? $longitude : ''; ?>" readonly />
+                                <input type="text" placeholder="Longitude" id="long" name="longitude" value="<?php echo isset($longitude) ? $longitude : ''; ?>"/>
+                                <span><?php echo isset($err['longitude'])? $err['longitude']: ''; ?></span>
                             </label>
-                        </div> -->
+                        </div>
 
                     <div>
                         Choose Speciality:
@@ -268,11 +269,16 @@
                 } else {
                     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         echo "<p>No doctors found within {$radius} km.</p>";
+
+                        // Redirect to avoid resubmission
+                        header("Location: nearme.php");
+                        exit();
+                        
                     }
                 }
             }
-                $stmt->close();
-                $conn->close();
+                // $stmt->close();
+                // $conn->close();
             ?>
             </div>
         </div>

@@ -8,7 +8,7 @@
     $uresult = mysqli_query($conn, $usql);
     $urow = mysqli_fetch_assoc($uresult);
 
-    $sql = "SELECT ap.id, ap.fullname, ap.email, ap.phone, ap.bg, ap.address, sp.title, doc.fname, ap.date, ap.time, ap.status from appointment as ap INNER JOIN specialities as sp ON ap.sid = sp.id INNER JOIN doctor as doc ON ap.did = doc.id where ap.email='$useremail';";
+    $sql = "SELECT ap.id, ap.fullname, ap.email, ap.phone, ap.bg, ap.address, ap.status, sp.title, doc.fname, ap.date, ap.time, ap.status from appointment as ap INNER JOIN specialities as sp ON ap.sid = sp.id INNER JOIN doctor as doc ON ap.did = doc.id where ap.email='$useremail';";
     $result = mysqli_query($conn, $sql);
 
 ?>
@@ -151,7 +151,9 @@
                                 <p>Status: <span style="<?php echo ($row['status'] == 1) ? 'color: green;' : (($row['status'] == 2) ? 'color: blue;' : 'color: red;') ;?>"><?php echo ($row['status'] == 1) ? "Approved" : (($row['status'] == 2) ? "Checked" : "Pending");?></span></p><br>
                             </div>
                             <div class="actions">
-                                <button class="book" type="submit"><a href="../patient/appointment/cancel.php?cancelid=<?php echo $row['id']; ?>">Cancel Booking</a></button>
+                                <button class="book" type="submit" <?php $class = ($row['status'] == 1 || $row['status'] == 1) ? 'class="disabled"' : ''; echo ($row['status'] == 1) ? 'class="disabled" onclick="return false"' : (($row['status'] == 2) ? 'class="disabled" onclick="return false";' : ' onclick="return true";') ;?>><a 
+                                        style="<?php echo ($row['status'] == 1) ? 'color: gray;' : (($row['status'] == 2) ? 'color: gray;' : 'color: green;') ;?>"><a <?php $class = ($row['status'] == 1 || $row['status'] == 1) ? 'class="disabled"' : ''; echo ($row['status'] == 1) ? 'class="disabled" onclick="return false"' : (($row['status'] == 2) ? 'class="disabled" onclick="return false";' : ' onclick="return true";') ;?>><a 
+                                        style="<?php echo ($row['status'] == 1) ? 'color: gray;' : (($row['status'] == 2) ? 'color: gray;' : 'color: white  ;') ;?>" href="../patient/appointment/cancel.php?cancelid=<?php echo $row['id']; ?>">Cancel Booking</a></button>
                             </div>
                         </div>
                     </div>

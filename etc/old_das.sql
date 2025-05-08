@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 08, 2025 at 09:55 PM
+-- Generation Time: May 05, 2025 at 04:38 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -66,8 +66,7 @@ CREATE TABLE `appointment` (
 --
 
 INSERT INTO `appointment` (`id`, `fullname`, `email`, `phone`, `bg`, `address`, `sid`, `did`, `date`, `time`, `status`) VALUES
-(59, 'Sushil Bohora', 'bohorasushil28@gmail.com', '9825151685', 'O-', 'Thankot', 24, 110, '2025-05-09', '00:58:00', 2),
-(61, 'Sushil Bohora', 'bohorasushil28@gmail.com', '9825151685', 'O-', 'Thankot', 26, 105, '2025-05-09', '01:32:00', 2);
+(56, 'Sushil Bohora', 'bohorasushil28@gmail.com', '9825151685', 'O-', 'Thankot', 26, 64, '2025-04-25', '15:17:00', 2);
 
 -- --------------------------------------------------------
 
@@ -100,8 +99,7 @@ INSERT INTO `doctor` (`id`, `fname`, `latitude`, `longitude`, `email`, `password
 (69, 'Dr. Kamal Lamsal', 27.69086089, 85.33379140, 'kamal11@gmail.com', '59b8ed7862e8255a370de15e6924afdd3fc584e0', '9895265262', 'Everest Hospital, New Baneshwor Rd, Kathmandu', 'image.jpg', 'uploads/image.jpg', 24, '2025-04-22 08:24:47'),
 (71, 'Dr. Banira Karki', 28.00000000, 85.00000000, 'banira11@gmail.com', '8cc1502ba48f5ac4cbc33078e7b2b4046c49c4f6', '9825151685', 'Norvic Hospital	', 'banira.jpg', 'uploads/banira.jpg', 34, '2025-04-22 09:27:08'),
 (97, 'Dr. Sudip Parajuli', 27.68999660, 85.31892853, 'sudip11@gmail.com', '64934d24ba72a391868f5c5eda33ee65fe53073f', '9814745214', 'Norvic Hospital	', 'sudip.jpg', 'uploads/sudip.jpg', 15, '2025-04-22 11:01:35'),
-(105, 'Dr. Shashi Kumar Thapa', 27.68999660, 85.31892853, 'shashi11@gmail.com', '57f9bcdc9873b0f8b485e1172709e073919638e9', '9825143674', 'Norvic Hospital', 'doctorslogo.jpg', 'uploads/doctorslogo.jpg', 26, '2025-05-01 19:51:26'),
-(110, 'Dr. Binit Gurung', 27.69249318, 85.31905910, 'binit111@gmail.com', 'eff4098c52ab9e185ebbf351e5434e69d93cb04b', '9825151685', 'Norvic Hospital', 'doctorslogo.jpg', 'uploads/doctorslogo.jpg', 24, '2025-05-06 05:50:18');
+(105, 'Dr. Shashi Kumar Thapa', 27.68999660, 85.31892853, 'shashi11@gmail.com', '57f9bcdc9873b0f8b485e1172709e073919638e9', '9825143674', 'Norvic Hospital', 'doctorslogo.jpg', 'uploads/doctorslogo.jpg', 26, '2025-05-01 19:51:26');
 
 -- --------------------------------------------------------
 
@@ -125,6 +123,13 @@ CREATE TABLE `new_doctor` (
   `created_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `new_doctor`
+--
+
+INSERT INTO `new_doctor` (`id`, `fname`, `latitude`, `longitude`, `email`, `password`, `phone`, `address`, `image_name`, `image_path`, `sid`, `status`, `created_at`) VALUES
+(1, 'Binit Gurung', 27.69249318, 85.31905910, 'binit111@gmail.com', 'eff4098c52ab9e185ebbf351e5434e69d93cb04b', '9805879212', 'Norvic Hospital', 'doctorslogo.jpg', 'uploads/doctorslogo.jpg', 23, 0, '2025-05-05 12:55:20');
+
 -- --------------------------------------------------------
 
 --
@@ -144,8 +149,7 @@ CREATE TABLE `patient` (
 --
 
 INSERT INTO `patient` (`id`, `aid`, `sid`, `did`, `created-at`) VALUES
-(116, 59, 24, 110, '2025-05-08 19:13:33'),
-(117, 61, 26, 105, '2025-05-08 19:48:46');
+(114, 56, 26, 64, '2025-04-25 09:53:30');
 
 -- --------------------------------------------------------
 
@@ -255,8 +259,7 @@ ALTER TABLE `doctor`
 -- Indexes for table `new_doctor`
 --
 ALTER TABLE `new_doctor`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `specialities-fk` (`sid`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `patient`
@@ -302,25 +305,25 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `appointment`
 --
 ALTER TABLE `appointment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT for table `doctor`
 --
 ALTER TABLE `doctor`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=117;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
 
 --
 -- AUTO_INCREMENT for table `new_doctor`
 --
 ALTER TABLE `new_doctor`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `patient`
 --
 ALTER TABLE `patient`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=118;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
 
 --
 -- AUTO_INCREMENT for table `register`
@@ -355,13 +358,7 @@ ALTER TABLE `appointment`
 -- Constraints for table `doctor`
 --
 ALTER TABLE `doctor`
-  ADD CONSTRAINT `doctor_ibfk_1` FOREIGN KEY (`sid`) REFERENCES `specialities` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `new_doctor`
---
-ALTER TABLE `new_doctor`
-  ADD CONSTRAINT `specialities-fk` FOREIGN KEY (`sid`) REFERENCES `specialities` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `doctor_ibfk_1` FOREIGN KEY (`sid`) REFERENCES `specialities` (`id`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `patient`

@@ -153,7 +153,7 @@
 
                     <tbody>
                         <tr>
-                            <?php 
+                            <?php
                                 while($row = mysqli_fetch_assoc($result)){
                             ?>
                                 <td><?php echo $row['fullname'] ?></td>
@@ -167,14 +167,14 @@
                                 <td><?php echo $row['date'] ?></td>
                                 <td class="event">
                                     <button><a href="../admin/appointment/update.php?updateid=<?php echo $row['id']; ?>"><svg class="icon icon-pencil"><use xlink:href="#icon-pencil"></use></svg></a></button>
-                                    <button 
+                                    <button
                                         
                                         <?php $class = ($row['status'] == 1 || $row['status'] == 2) ? 'class="disabled"' : ''; echo ($row['status'] == 1) ? 'class="disabled" onclick="return false"' : (($row['status'] == 2) ? 'class="disabled" onclick="return false";' : ' onclick="return true";') ;?>><a 
                                         style="<?php echo ($row['status'] == 1) ? 'color: gray;' : (($row['status'] == 2) ? 'color: gray;' : 'color: green;') ;?>" href="../admin/appointment/approve.php?approveid=<?php echo $row['id']; ?>"><svg class="icon icon-check-circle"><use xlink:href="#icon-check-circle" ></use></svg></a></button>
                                     <button><a href="../admin/appointment/delete.php?deleteid=<?php echo $row['id']; ?>"><svg class="icon icon-trash"><use xlink:href="#icon-trash"></use></svg></a></button>
                                 </td>
                         </tr>
-                            <?php   
+                            <?php
                                 }
                             ?>
                     </tbody>
